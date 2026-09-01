@@ -4,56 +4,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kingdom 3922 — Reward System</title>
+<title>Kingdom 3922 — Reward & Penalty System</title>
 
 <meta
     name="description"
-    content="Kingdom 3922 official reward system, KVK rewards, fort rally rewards and alliance mobilization rewards."
+    content="Kingdom 3922 official reward system, KVK rewards, activity requirements, penalties and kingdom regulations."
 >
 
 <style>
 
 :root {
+
     --bg: #050407;
     --bg-secondary: #09070d;
-    --panel: rgba(16, 12, 22, 0.92);
-    --panel-light: rgba(23, 16, 31, 0.94);
+
+    --panel: rgba(16, 12, 22, 0.94);
+    --panel-hover: rgba(24, 16, 32, 0.97);
 
     --purple: #a033d1;
-    --purple-light: #cc70f3;
-    --purple-dark: #6f168f;
+    --purple-light: #ca6aed;
+    --purple-dark: #651080;
 
-    --gold: #f1c75b;
-    --gold-light: #ffe59a;
+    --gold: #f4c95d;
+    --gold-light: #ffe59c;
 
-    --silver: #ccd0db;
-    --elite: #a963df;
-    --advanced: #4cb8cf;
+    --silver: #d6d8e0;
+    --elite: #ac64df;
+    --advanced: #4eb8cd;
 
-    --text: #f5f2f7;
-    --muted: #9d96a5;
+    --danger: #e25868;
+    --danger-dark: #991f32;
 
-    --border: rgba(160, 51, 209, 0.18);
-    --border-light: rgba(255,255,255,.07);
+    --orange: #e5a04c;
 
-    --radius: 18px;
+    --text: #f4f1f6;
+    --muted: #a19aa6;
+
+    --border: rgba(160, 51, 209, 0.2);
+    --border-light: rgba(255,255,255,0.065);
+
+    --radius: 16px;
 }
 
 
-/* RESET */
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
+
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
 }
 
 html {
+
     scroll-behavior: smooth;
+
 }
 
 body {
+
     min-height: 100vh;
+
+    color: var(--text);
 
     font-family:
         Inter,
@@ -63,26 +79,29 @@ body {
         sans-serif;
 
     background:
+
         radial-gradient(
-            circle at 50% -5%,
-            rgba(160,51,209,.19),
-            transparent 35%
+            circle at 50% -10%,
+            rgba(160,51,209,.20),
+            transparent 33%
         ),
+
         radial-gradient(
-            circle at 8% 55%,
-            rgba(160,51,209,.05),
+            circle at 5% 45%,
+            rgba(160,51,209,.055),
             transparent 30%
         ),
+
         radial-gradient(
-            circle at 92% 40%,
+            circle at 95% 35%,
             rgba(160,51,209,.04),
-            transparent 30%
+            transparent 28%
         ),
+
         #050407;
 
-    color: var(--text);
-
     line-height: 1.6;
+
 }
 
 
@@ -93,16 +112,20 @@ body::before {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
-    pointer-events: none;
     z-index: -1;
 
+    pointer-events: none;
+
     background-image:
+
         linear-gradient(
             rgba(255,255,255,.012) 1px,
             transparent 1px
         ),
+
         linear-gradient(
             90deg,
             rgba(255,255,255,.012) 1px,
@@ -112,13 +135,19 @@ body::before {
     background-size: 60px 60px;
 
     mask-image:
+
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.8),
-            transparent 85%
+            black,
+            transparent 90%
         );
+
 }
 
+
+/* =========================================================
+   GENERAL
+========================================================= */
 
 .container {
 
@@ -128,123 +157,155 @@ body::before {
     );
 
     margin: auto;
+
+}
+
+a {
+
+    color: inherit;
+
 }
 
 
-/* NAV */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 nav {
 
     position: sticky;
+
     top: 0;
 
-    z-index: 100;
+    z-index: 1000;
 
     height: 68px;
 
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(20px);
 
     background:
-        rgba(5,4,7,.78);
+        rgba(5,4,7,.82);
 
     border-bottom:
         1px solid rgba(255,255,255,.055);
-}
 
+}
 
 .nav-inner {
 
     height: 100%;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
+    gap: 20px;
+
 }
 
 
 .brand {
 
     display: flex;
+
     align-items: center;
 
-    gap: 10px;
+    gap: 9px;
 
-    font-size: 14px;
+    font-size: 13px;
+
     font-weight: 900;
 
-    letter-spacing: .08em;
+    letter-spacing: .11em;
+
+    white-space: nowrap;
+
 }
 
 
-.brand-symbol {
+.brand-icon {
+
     color: var(--purple-light);
+
+    font-size: 17px;
+
 }
 
 
 .nav-links {
 
     display: flex;
+
     align-items: center;
 
-    gap: 8px;
+    gap: 6px;
+
 }
 
 
 .nav-links a {
 
-    padding: 8px 14px;
+    padding: 9px 14px;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     text-decoration: none;
 
-    color: #b8b1bd;
+    color: #aaa3ae;
 
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
 
-    transition: .2s;
+    font-weight: 800;
+
+    transition: .2s ease;
+
 }
 
 
 .nav-links a:hover {
 
-    background:
-        rgba(160,51,209,.08);
-
-    color: white;
-}
-
-
-.nav-links .active {
-
     color: white;
 
     background:
-        rgba(160,51,209,.13);
+        rgba(160,51,209,.09);
+
 }
 
 
-.nav-links .coming {
+.nav-links .reward-nav {
 
-    opacity: .38;
-    cursor: default;
+    color: #eadff0;
+
 }
 
 
-/* HERO */
+.nav-links .penalty-nav {
+
+    color: #dfadb4;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero {
 
-    min-height: 610px;
+    position: relative;
+
+    min-height: 620px;
 
     display: flex;
+
     align-items: center;
 
     text-align: center;
 
-    position: relative;
     overflow: hidden;
+
 }
 
 
@@ -254,552 +315,849 @@ nav {
 
     position: absolute;
 
-    width: 620px;
-    height: 620px;
+    width: 650px;
+
+    height: 650px;
 
     border-radius: 100%;
 
-    top: 35%;
     left: 50%;
 
+    top: 40%;
+
     transform:
-        translate(-50%,-50%);
+        translate(-50%, -50%);
 
     background:
+
         radial-gradient(
             circle,
-            rgba(160,51,209,.2),
-            transparent 67%
+            rgba(160,51,209,.23),
+            transparent 65%
         );
 
-    filter: blur(10px);
+    filter: blur(12px);
+
 }
 
 
 .hero-content {
 
     position: relative;
+
     z-index: 2;
 
     max-width: 900px;
 
     margin: auto;
+
 }
 
 
-.kingdom {
+.kingdom-badge {
 
     display: inline-flex;
+
     align-items: center;
-    justify-content: center;
 
     gap: 10px;
 
-    padding: 9px 18px;
+    padding:
+        9px 18px;
 
-    border-radius: 100px;
+    margin-bottom:
+        25px;
+
+    border-radius:
+        100px;
 
     border:
-        1px solid rgba(160,51,209,.4);
-
-    color: var(--purple-light);
+        1px solid rgba(160,51,209,.43);
 
     background:
-        rgba(160,51,209,.06);
+        rgba(160,51,209,.065);
+
+    color:
+        var(--purple-light);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .15em;
+
+    text-transform:
+        uppercase;
 
     box-shadow:
         0 0 35px rgba(160,51,209,.06);
 
-    font-size: 12px;
-    font-weight: 900;
-
-    letter-spacing: .15em;
-
-    margin-bottom: 25px;
 }
 
 
 .hero h1 {
 
     font-size:
-        clamp(52px,8vw,92px);
+        clamp(48px,8vw,92px);
 
-    line-height: .94;
+    line-height:
+        .94;
 
-    font-weight: 950;
+    font-weight:
+        950;
 
-    letter-spacing: -.055em;
+    letter-spacing:
+        -.055em;
 
     background:
+
         linear-gradient(
             180deg,
-            #ffffff 10%,
-            #d8c9df 58%,
-            #a033d1 115%
+            #fff 8%,
+            #d9cce0 58%,
+            #a033d1 112%
         );
 
-    -webkit-background-clip: text;
-    background-clip: text;
+    -webkit-background-clip:
+        text;
 
-    color: transparent;
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
 }
 
 
-.hero-subtitle {
+.hero h1 span {
 
-    margin-top: 20px;
+    display: block;
 
-    color: var(--muted);
+    margin-top: 16px;
+
+    font-size: .39em;
+
+    letter-spacing: .12em;
+
+}
+
+
+.hero-description {
+
+    max-width: 650px;
+
+    margin:
+        27px auto 0;
+
+    color:
+        var(--muted);
 
     font-size:
         clamp(15px,2vw,18px);
 
-    max-width: 630px;
-
-    margin-left: auto;
-    margin-right: auto;
 }
 
 
 .hero-buttons {
 
     display: flex;
+
+    align-items: center;
+
     justify-content: center;
+
+    flex-wrap: wrap;
 
     gap: 12px;
 
-    margin-top: 30px;
+    margin-top: 31px;
 
-    flex-wrap: wrap;
 }
 
 
-.button {
+.btn {
 
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
 
-    padding: 12px 21px;
+    min-width: 165px;
 
-    border-radius: 10px;
+    padding:
+        13px 21px;
 
-    text-decoration: none;
+    border-radius:
+        10px;
 
-    color: white;
+    text-decoration:
+        none;
 
-    font-size: 13px;
-    font-weight: 800;
+    font-size:
+        13px;
+
+    font-weight:
+        850;
 
     border:
-        1px solid rgba(255,255,255,.08);
+        1px solid var(--border-light);
 
     background:
-        rgba(255,255,255,.035);
+        rgba(255,255,255,.03);
 
-    transition: .2s ease;
+    color:
+        white;
+
+    transition:
+        .2s ease;
+
 }
 
 
-.button:hover {
+.btn:hover {
 
     transform:
         translateY(-2px);
 
     border-color:
         rgba(160,51,209,.45);
+
 }
 
 
-.button-primary {
+.btn-primary {
 
-    border-color: transparent;
+    border-color:
+        transparent;
 
     background:
+
         linear-gradient(
             135deg,
             #a033d1,
-            #73189d
+            #6e188e
         );
 
     box-shadow:
         0 10px 30px rgba(160,51,209,.22);
+
 }
 
 
-/* INFO STRIP */
+.btn-danger {
 
-.stats {
+    border-color:
+        rgba(226,88,104,.3);
+
+    background:
+        rgba(226,88,104,.06);
+
+    color:
+        #f0c4c9;
+
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-grid {
 
     display: grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        repeat(4, 1fr);
 
     gap: 12px;
 
-    margin-bottom: 75px;
+    margin-bottom: 72px;
+
 }
 
 
-.stat {
+.summary-card {
 
-    padding: 22px;
-
-    text-align: center;
-
-    border-radius: 14px;
+    padding:
+        22px 18px;
 
     border:
         1px solid var(--border-light);
 
+    border-radius:
+        14px;
+
     background:
         rgba(255,255,255,.018);
+
+    text-align:
+        center;
+
 }
 
 
-.stat strong {
+.summary-card strong {
 
     display: block;
 
     font-size: 20px;
+
+    color: #f0e8f3;
+
 }
 
 
-.stat span {
+.summary-card span {
 
     display: block;
 
-    margin-top: 2px;
+    margin-top: 3px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 11px;
+    font-size:
+        10px;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 
-    letter-spacing: .11em;
+    letter-spacing:
+        .12em;
+
 }
 
 
-/* SECTION */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 section {
 
     padding:
-        70px 0;
+        76px 0;
+
 }
 
 
-.section-heading {
+.section-header {
 
-    margin-bottom: 32px;
+    margin-bottom:
+        35px;
+
 }
 
 
-.eyebrow {
+.section-label {
 
-    color: var(--purple-light);
+    margin-bottom:
+        7px;
 
-    font-size: 11px;
-
-    font-weight: 900;
-
-    letter-spacing: .16em;
-
-    text-transform: uppercase;
-
-    margin-bottom: 7px;
-}
-
-
-.section-heading h2 {
+    color:
+        var(--purple-light);
 
     font-size:
-        clamp(32px,5vw,47px);
+        11px;
 
-    line-height: 1.05;
+    font-weight:
+        900;
 
-    letter-spacing: -.04em;
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .16em;
+
 }
 
 
-.section-heading p {
+.section-header h2 {
 
-    margin-top: 11px;
+    font-size:
+        clamp(32px,5vw,48px);
 
-    max-width: 670px;
+    line-height:
+        1.06;
 
-    color: var(--muted);
+    letter-spacing:
+        -.04em;
 
-    font-size: 14px;
 }
 
 
-/* CATEGORY */
+.section-header p {
+
+    max-width:
+        700px;
+
+    margin-top:
+        11px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        14px;
+
+}
+
+
+.section-header.penalty-header .section-label {
+
+    color:
+        #e47b88;
+
+}
+
+
+.divider {
+
+    width:
+        100%;
+
+    height:
+        1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(160,51,209,.3),
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
 
 .category {
 
-    margin-top: 55px;
+    margin-top:
+        56px;
+
 }
 
 
 .category:first-of-type {
-    margin-top: 0;
+
+    margin-top:
+        0;
+
 }
 
 
 .category-header {
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display:
+        flex;
 
-    margin-bottom: 17px;
+    justify-content:
+        space-between;
 
-    gap: 15px;
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        17px;
+
 }
 
 
 .category-left {
 
-    display: flex;
-    align-items: center;
+    display:
+        flex;
 
-    gap: 13px;
+    align-items:
+        center;
+
+    gap:
+        13px;
+
 }
 
 
 .category-icon {
 
-    width: 40px;
-    height: 40px;
+    width:
+        41px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height:
+        41px;
 
-    border-radius: 10px;
+    display:
+        flex;
 
-    color: var(--purple-light);
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        10px;
 
     border:
-        1px solid rgba(160,51,209,.22);
+        1px solid rgba(160,51,209,.23);
 
     background:
-        rgba(160,51,209,.07);
+        rgba(160,51,209,.075);
 
-    font-size: 18px;
+    color:
+        var(--purple-light);
+
+    font-size:
+        18px;
+
+}
+
+
+.penalty-category .category-icon {
+
+    border-color:
+        rgba(226,88,104,.22);
+
+    background:
+        rgba(226,88,104,.055);
+
+    color:
+        #e77886;
+
 }
 
 
 .category-header h3 {
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    letter-spacing: -.02em;
+    letter-spacing:
+        -.02em;
+
 }
 
 
 .category-header small {
 
-    color: #77717c;
+    display:
+        block;
 
-    font-size: 10px;
+    margin-top:
+        1px;
 
-    text-transform: uppercase;
+    color:
+        #7d7681;
 
-    letter-spacing: .12em;
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .12em;
+
 }
 
 
-/* IMPORTANT NOTICE */
+/* =========================================================
+   NOTICE
+========================================================= */
 
 .notice {
 
-    margin-bottom: 18px;
+    padding:
+        14px 17px;
 
-    padding: 14px 17px;
+    margin-bottom:
+        17px;
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
     border:
-        1px solid rgba(241,199,91,.16);
+        1px solid rgba(241,199,91,.17);
 
     background:
-        rgba(241,199,91,.035);
+        rgba(241,199,91,.037);
 
-    color: #c5b681;
+    color:
+        #c5b986;
 
-    font-size: 12px;
+    font-size:
+        12px;
+
 }
 
 
 .notice strong {
-    color: var(--gold-light);
+
+    color:
+        var(--gold-light);
+
 }
 
 
-/* REWARDS */
+.notice-danger {
 
-.rewards {
+    border-color:
+        rgba(226,88,104,.19);
 
-    display: grid;
+    background:
+        rgba(226,88,104,.04);
 
-    gap: 10px;
+    color:
+        #c7a0a6;
+
 }
 
 
-.reward {
+.notice-danger strong {
 
-    position: relative;
+    color:
+        #ec9ca6;
 
-    display: grid;
+}
+
+
+/* =========================================================
+   ROW CARDS
+========================================================= */
+
+.rows {
+
+    display:
+        grid;
+
+    gap:
+        10px;
+
+}
+
+
+.row {
+
+    position:
+        relative;
+
+    display:
+        grid;
 
     grid-template-columns:
-        100px 1fr;
+        102px 1fr;
 
-    align-items: center;
+    align-items:
+        center;
 
-    min-height: 95px;
+    min-height:
+        96px;
 
-    gap: 18px;
+    gap:
+        18px;
 
-    padding: 18px 21px;
+    padding:
+        18px 21px;
 
-    border-radius: 15px;
+    overflow:
+        hidden;
+
+    border-radius:
+        15px;
 
     border:
         1px solid var(--border-light);
 
     background:
+
         linear-gradient(
             110deg,
-            rgba(255,255,255,.025),
+            rgba(255,255,255,.024),
             transparent 45%
         ),
+
         var(--panel);
 
     transition:
         .22s ease;
 
-    overflow: hidden;
 }
 
 
-.reward::before {
+.row::before {
 
     content: "";
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 0;
-    bottom: 0;
-    left: 0;
+    top:
+        0;
 
-    width: 3px;
+    left:
+        0;
+
+    bottom:
+        0;
+
+    width:
+        3px;
+
 }
 
 
-.reward:hover {
+.row:hover {
 
     transform:
         translateY(-2px);
 
     border-color:
-        rgba(160,51,209,.33);
+        rgba(160,51,209,.34);
 
     background:
+
         linear-gradient(
             110deg,
-            rgba(160,51,209,.055),
+            rgba(160,51,209,.05),
             transparent 45%
         ),
-        var(--panel-light);
+
+        var(--panel-hover);
+
 }
 
 
-.rank {
+.row-rank {
 
-    padding-left: 3px;
+    padding-left:
+        3px;
+
 }
 
 
-.rank span {
+.row-rank span {
 
-    display: block;
+    display:
+        block;
 
-    color: #78727d;
+    color:
+        #7b7480;
 
-    font-size: 9px;
+    font-size:
+        9px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: .13em;
+    text-transform:
+        uppercase;
 
-    text-transform: uppercase;
+    letter-spacing:
+        .13em;
+
 }
 
 
-.rank strong {
+.row-rank strong {
 
-    display: block;
+    display:
+        block;
 
-    margin-top: 2px;
+    margin-top:
+        2px;
 
-    font-size: 20px;
+    font-size:
+        20px;
 
-    line-height: 1.15;
+    line-height:
+        1.1;
+
 }
 
 
-.reward-info {
+.row-info {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
-    justify-content: space-between;
+    align-items:
+        center;
 
-    gap: 25px;
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+
 }
 
 
-.trophy {
+.row-name {
 
-    font-weight: 800;
+    min-width:
+        180px;
 
-    font-size: 14px;
+    font-size:
+        14px;
 
-    min-width: 170px;
+    font-weight:
+        800;
+
 }
 
 
-.reward-value {
+.row-value {
 
-    text-align: right;
+    text-align:
+        right;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 13px;
+    font-size:
+        13px;
+
 }
 
 
-.reward-value b {
+.row-value b {
 
-    color: #f0edf2;
+    color:
+        #f1edf3;
 
-    font-weight: 700;
+    font-weight:
+        750;
+
 }
 
 
-/* TIERS */
+/* =========================================================
+   REWARD LEVELS
+========================================================= */
 
 .legendary::before {
     background: var(--gold);
 }
 
-.legendary .rank strong,
-.legendary .trophy {
+.legendary .row-rank strong,
+.legendary .row-name {
     color: var(--gold-light);
 }
 
@@ -808,7 +1166,7 @@ section {
     background: var(--silver);
 }
 
-.epic .rank strong {
+.epic .row-rank strong {
     color: var(--silver);
 }
 
@@ -817,7 +1175,7 @@ section {
     background: var(--elite);
 }
 
-.elite .rank strong {
+.elite .row-rank strong {
     color: var(--elite);
 }
 
@@ -826,85 +1184,226 @@ section {
     background: var(--advanced);
 }
 
-.advanced .rank strong {
+.advanced .row-rank strong {
     color: var(--advanced);
 }
 
 
 .standard::before {
-    background: #736c78;
+    background: #706977;
 }
 
 
-/* SECTION DIVIDER */
+/* =========================================================
+   PENALTY LEVELS
+========================================================= */
 
-.divider {
+.penalty-low::before {
 
-    height: 1px;
+    background:
+        #b98b4e;
+
+}
+
+.penalty-low .row-rank strong {
+
+    color:
+        #dcb473;
+
+}
+
+
+.penalty-medium::before {
+
+    background:
+        var(--orange);
+
+}
+
+.penalty-medium .row-rank strong {
+
+    color:
+        #e8aa5d;
+
+}
+
+
+.penalty-high::before {
+
+    background:
+        var(--danger);
+
+}
+
+.penalty-high .row-rank strong {
+
+    color:
+        #e87784;
+
+}
+
+
+.penalty-zero::before {
 
     background:
         linear-gradient(
-            90deg,
-            transparent,
-            rgba(160,51,209,.25),
-            transparent
+            #ff4057,
+            #9b1125
         );
+
 }
 
 
-/* END */
+.penalty-zero {
+
+    border-color:
+        rgba(226,88,104,.14);
+
+    background:
+
+        linear-gradient(
+            110deg,
+            rgba(226,88,104,.055),
+            transparent
+        ),
+
+        var(--panel);
+
+}
+
+
+.penalty-zero .row-rank strong,
+.penalty-zero .row-name {
+
+    color:
+        #ef7785;
+
+}
+
+
+/* =========================================================
+   PENALTY INTRO
+========================================================= */
+
+.penalty-intro {
+
+    margin-top:
+        10px;
+
+    padding:
+        26px;
+
+    border:
+        1px solid rgba(226,88,104,.13);
+
+    border-radius:
+        17px;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            rgba(226,88,104,.04),
+            transparent
+        ),
+
+        rgba(13,9,17,.8);
+
+}
+
+
+.penalty-intro strong {
+
+    color:
+        #eca1aa;
+
+}
+
+
+.penalty-intro p {
+
+    color:
+        var(--muted);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
 
 .cta {
 
     margin:
-        70px auto 85px;
+        75px 0 85px;
 
     padding:
         65px 30px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    border-radius: 24px;
+    border-radius:
+        24px;
 
     border:
         1px solid rgba(160,51,209,.25);
 
     background:
+
         radial-gradient(
-            circle at top,
+            circle at 50% 0,
             rgba(160,51,209,.18),
-            transparent 50%
+            transparent 52%
         ),
+
         rgba(13,9,17,.92);
+
 }
 
 
-.cta-symbol {
+.cta-icon {
 
-    color: var(--purple-light);
+    color:
+        var(--purple-light);
 
-    font-size: 31px;
+    font-size:
+        32px;
 
-    margin-bottom: 8px;
 }
 
 
 .cta h2 {
 
+    margin-top:
+        9px;
+
     font-size:
         clamp(27px,5vw,43px);
 
-    line-height: 1.1;
+    line-height:
+        1.12;
 
-    letter-spacing: -.035em;
+    letter-spacing:
+        -.035em;
+
 }
 
 
 .cta h2 span {
 
-    color: var(--purple-light);
+    color:
+        var(--purple-light);
+
 }
 
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer {
 
@@ -914,86 +1413,184 @@ footer {
     border-top:
         1px solid rgba(255,255,255,.04);
 
-    color: #66606a;
+    color:
+        #69616d;
 
-    font-size: 11px;
+    text-align:
+        center;
 
-    text-align: center;
+    font-size:
+        10px;
 
-    letter-spacing: .09em;
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .12em;
+
 }
 
 
-/* MOBILE */
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media(max-width: 800px) {
 
-    .nav-links a:not(.active) {
-        display: none;
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
     }
+
+
+    .row {
+
+        grid-template-columns:
+            78px 1fr;
+
+        gap:
+            10px;
+
+        padding:
+            17px;
+
+    }
+
+
+    .row-info {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap:
+            6px;
+
+    }
+
+
+    .row-value {
+
+        text-align:
+            left;
+
+    }
+
+
+    .row-name {
+
+        min-width:
+            0;
+
+    }
+
 
     .hero {
-        min-height: 560px;
-    }
 
-    .stats {
-        grid-template-columns:
-            repeat(2,1fr);
-    }
+        min-height:
+            560px;
 
-    .reward {
-
-        grid-template-columns:
-            74px 1fr;
-
-        gap: 10px;
-
-        padding: 17px;
-    }
-
-    .reward-info {
-
-        flex-direction: column;
-        align-items: flex-start;
-
-        gap: 5px;
-    }
-
-    .reward-value {
-
-        text-align: left;
-    }
-
-    .trophy {
-        min-width: 0;
     }
 
 }
 
 
-@media(max-width: 480px) {
+@media(max-width: 600px) {
 
-    .container {
-        width:
-            min(100% - 24px,1180px);
+    .nav-inner {
+
+        gap:
+            7px;
+
     }
+
+
+    .brand {
+
+        font-size:
+            11px;
+
+    }
+
+
+    .nav-links {
+
+        gap:
+            3px;
+
+    }
+
+
+    .nav-links a {
+
+        padding:
+            8px 8px;
+
+        font-size:
+            10px;
+
+    }
+
 
     .hero h1 {
-        font-size: 47px;
+
+        font-size:
+            47px;
+
     }
 
-    .stats {
-        grid-template-columns:
-            1fr 1fr;
-    }
 
     section {
+
         padding:
-            54px 0;
+            58px 0;
+
     }
 
+
     .category-header small {
-        display: none;
+
+        display:
+            none;
+
+    }
+
+}
+
+
+@media(max-width: 440px) {
+
+    .container {
+
+        width:
+            min(
+                calc(100% - 24px),
+                1180px
+            );
+
+    }
+
+
+    .nav-links .penalty-nav {
+
+        font-size:
+            0;
+
+    }
+
+
+    .nav-links .penalty-nav::after {
+
+        content:
+            "Penalties";
+
+        font-size:
+            10px;
+
     }
 
 }
@@ -1005,156 +1602,165 @@ footer {
 <body>
 
 
-<!-- NAVIGATION -->
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
 
 <nav>
 
-<div class="container nav-inner">
+    <div class="container nav-inner">
 
-    <div class="brand">
+        <div class="brand">
 
-        <span class="brand-symbol">
-            ✦
-        </span>
+            <span class="brand-icon">
+                ✦
+            </span>
 
-        KINGDOM 3922
+            KINGDOM 3922
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a
+                href="#rewards"
+                class="reward-nav"
+            >
+                Rewards
+            </a>
+
+            <a
+                href="#penalties"
+                class="penalty-nav"
+            >
+                Penalties & Fines
+            </a>
+
+        </div>
 
     </div>
-
-
-    <div class="nav-links">
-
-        <a
-            class="active"
-            href="#rewards"
-        >
-            Rewards
-        </a>
-
-        <a
-            class="coming"
-            href="javascript:void(0)"
-        >
-            Penalties & Fines
-        </a>
-
-    </div>
-
-</div>
 
 </nav>
 
 
 
-<!-- HERO -->
+<!-- =======================================================
+     HERO
+======================================================= -->
 
 <header class="hero">
 
-<div class="container hero-content">
+    <div class="container hero-content">
 
-    <div class="kingdom">
-        ✦ KINGDOM 3922 ✦
+        <div class="kingdom-badge">
+            ✦ KINGDOM 3922 ✦
+        </div>
+
+
+        <h1>
+
+            KINGDOM
+
+            <span>
+                REWARD & POLICY SYSTEM
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Rewarding performance, contribution and consistency
+            while maintaining clear kingdom standards for activity,
+            cooperation and KVK participation.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#rewards"
+                class="btn btn-primary"
+            >
+                View Rewards
+            </a>
+
+            <a
+                href="#penalties"
+                class="btn btn-danger"
+            >
+                Penalties & Fines
+            </a>
+
+        </div>
+
     </div>
-
-
-    <h1>
-        REWARD
-        SYSTEM
-    </h1>
-
-
-    <p class="hero-subtitle">
-
-        Performance, contribution and consistency
-        are rewarded.
-
-        Compete for weekly rankings,
-        contribute during KVK and support
-        the kingdom.
-
-    </p>
-
-
-    <div class="hero-buttons">
-
-        <a
-            href="#rewards"
-            class="button button-primary"
-        >
-            Explore Rewards
-        </a>
-
-        <a
-            href="#kvk-end"
-            class="button"
-        >
-            End of KVK
-        </a>
-
-    </div>
-
-</div>
 
 </header>
 
 
 
-<main id="rewards">
+<main>
 
 
-<!-- SUMMARY -->
+<!-- =======================================================
+     SUMMARY
+======================================================= -->
 
 <div class="container">
 
-<div class="stats">
+    <div class="summary-grid">
 
-    <div class="stat">
-        <strong>5</strong>
-        <span>Reward Categories</span>
-    </div>
+        <div class="summary-card">
+            <strong>DKP</strong>
+            <span>War Performance</span>
+        </div>
 
-    <div class="stat">
-        <strong>Weekly</strong>
-        <span>Performance Rewards</span>
-    </div>
+        <div class="summary-card">
+            <strong>100+</strong>
+            <span>Weekly Fort Requirement</span>
+        </div>
 
-    <div class="stat">
-        <strong>DKP</strong>
-        <span>War Ranking</span>
-    </div>
+        <div class="summary-card">
+            <strong>1500</strong>
+            <span>Mobilization Minimum</span>
+        </div>
 
-    <div class="stat">
-        <strong>VIP</strong>
-        <span>KVK Rewards</span>
+        <div class="summary-card">
+            <strong>3922</strong>
+            <span>Kingdom Standards</span>
+        </div>
+
     </div>
 
 </div>
 
-</div>
 
 
+<!-- =======================================================
+     REWARDS
+======================================================= -->
 
-<!-- KVK -->
-
-<section>
+<section id="rewards">
 
 <div class="container">
 
 
-<div class="section-heading">
+<div class="section-header">
 
-    <div class="eyebrow">
-        Combat Rewards
+    <div class="section-label">
+        Kingdom Rewards
     </div>
 
     <h2>
-        Kingdom vs Kingdom
+        Reward System
     </h2>
 
     <p>
-        DKP performance determines weekly
-        rewards during war periods and final
-        KVK rankings.
+        Kingdom 3922 performance rewards are based on DKP,
+        kingdom activity, fort participation and Alliance Mobilization.
     </p>
 
 </div>
@@ -1174,15 +1780,8 @@ footer {
         </div>
 
         <div>
-
-            <h3>
-                War Weeks
-            </h3>
-
-            <small>
-                DKP Based
-            </small>
-
+            <h3>War Weeks</h3>
+            <small>Weekly DKP Rewards</small>
         </div>
 
     </div>
@@ -1190,29 +1789,27 @@ footer {
 </div>
 
 
-<div class="rewards">
+<div class="rows">
 
 
-<div class="reward legendary">
+<div class="row legendary">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 1</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Legendary Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>125M</b> Food ·
             <b>125M</b> Wood ·
             <b>60M</b> Stone ·
             <b>60M</b> Gold
-
         </div>
 
     </div>
@@ -1221,26 +1818,24 @@ footer {
 
 
 
-<div class="reward epic">
+<div class="row epic">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 2</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Epic Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>75M</b> Food ·
             <b>75M</b> Wood ·
             <b>40M</b> Stone ·
             <b>40M</b> Gold
-
         </div>
 
     </div>
@@ -1249,26 +1844,24 @@ footer {
 
 
 
-<div class="reward epic">
+<div class="row epic">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 3</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Epic Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>40M</b> Food ·
             <b>40M</b> Wood ·
             <b>20M</b> Stone ·
             <b>20M</b> Gold
-
         </div>
 
     </div>
@@ -1277,26 +1870,24 @@ footer {
 
 
 
-<div class="reward standard">
+<div class="row standard">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 4</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Resource Reward
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>20M</b> Food ·
             <b>20M</b> Wood ·
             <b>10M</b> Stone ·
             <b>10M</b> Gold
-
         </div>
 
     </div>
@@ -1305,16 +1896,16 @@ footer {
 
 
 
-<div class="reward elite">
+<div class="row elite">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 4–8</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Elite Trophy
         </div>
 
@@ -1324,16 +1915,16 @@ footer {
 
 
 
-<div class="reward advanced">
+<div class="row advanced">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>DKP Rank</span>
         <strong>TOP 9–18</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Advanced Trophy
         </div>
 
@@ -1349,10 +1940,7 @@ footer {
 
 <!-- END KVK -->
 
-<div
-    class="category"
-    id="kvk-end"
->
+<div class="category">
 
 <div class="category-header">
 
@@ -1363,15 +1951,8 @@ footer {
         </div>
 
         <div>
-
-            <h3>
-                End of KVK
-            </h3>
-
-            <small>
-                Final DKP Ranking
-            </small>
-
+            <h3>End of KVK</h3>
+            <small>Final DKP Ranking</small>
         </div>
 
     </div>
@@ -1381,38 +1962,35 @@ footer {
 
 <div class="notice">
 
-    <strong>Fair-play notice:</strong>
-
+    <strong>Fair Play:</strong>
     KP chasers will be detected.
     Fight accordingly.
 
 </div>
 
 
-<div class="rewards">
+<div class="rows">
 
 
-<div class="reward legendary">
+<div class="row legendary">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 1</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Legendary Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>500M</b> Food ·
             <b>500M</b> Wood ·
             <b>300M</b> Stone ·
             <b>300M</b> Gold ·
             <b>VIP List</b>
-
         </div>
 
     </div>
@@ -1421,27 +1999,25 @@ footer {
 
 
 
-<div class="reward epic">
+<div class="row epic">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 2</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Epic Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>350M</b> Food ·
             <b>350M</b> Wood ·
             <b>250M</b> Stone ·
             <b>250M</b> Gold ·
             <b>VIP List</b>
-
         </div>
 
     </div>
@@ -1450,27 +2026,25 @@ footer {
 
 
 
-<div class="reward epic">
+<div class="row epic">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 3</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Epic Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>225M</b> Food ·
             <b>225M</b> Wood ·
             <b>125M</b> Stone ·
             <b>125M</b> Gold ·
             <b>VIP List</b>
-
         </div>
 
     </div>
@@ -1479,27 +2053,25 @@ footer {
 
 
 
-<div class="reward elite">
+<div class="row elite">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 4</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Elite Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>150M</b> Food ·
             <b>150M</b> Wood ·
             <b>75M</b> Stone ·
             <b>75M</b> Gold ·
             <b>VIP List</b>
-
         </div>
 
     </div>
@@ -1508,27 +2080,25 @@ footer {
 
 
 
-<div class="reward elite">
+<div class="row elite">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 5</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Elite Trophy
         </div>
 
-        <div class="reward-value">
-
+        <div class="row-value">
             <b>50M</b> Food ·
             <b>50M</b> Wood ·
             <b>25M</b> Stone ·
             <b>25M</b> Gold ·
             <b>VIP List</b>
-
         </div>
 
     </div>
@@ -1537,16 +2107,16 @@ footer {
 
 
 
-<div class="reward elite">
+<div class="row elite">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 4–8</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Elite Trophy
         </div>
 
@@ -1556,16 +2126,16 @@ footer {
 
 
 
-<div class="reward advanced">
+<div class="row advanced">
 
-    <div class="rank">
+    <div class="row-rank">
         <span>Final Rank</span>
         <strong>TOP 9–18</strong>
     </div>
 
-    <div class="reward-info">
+    <div class="row-info">
 
-        <div class="trophy">
+        <div class="row-name">
             Advanced Trophy
         </div>
 
@@ -1585,122 +2155,101 @@ footer {
 
 <div class="category-header">
 
-<div class="category-left">
+    <div class="category-left">
 
-<div class="category-icon">
-    ◈
-</div>
+        <div class="category-icon">
+            ◈
+        </div>
 
-<div>
+        <div>
+            <h3>During KVK</h3>
+            <small>DKP Trophy Ranking</small>
+        </div>
 
-<h3>
-    During KVK
-</h3>
-
-<small>
-    Activity Ranking
-</small>
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
-<div class="rewards">
+<div class="rows">
 
 
-<div class="reward legendary">
+<div class="row legendary">
 
-<div class="rank">
-<span>DKP Rank</span>
-<strong>TOP 1</strong>
-</div>
+    <div class="row-rank">
+        <span>DKP Rank</span>
+        <strong>TOP 1</strong>
+    </div>
 
-<div class="reward-info">
-
-<div class="trophy">
-Legendary Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Legendary Trophy
+        </div>
+    </div>
 
 </div>
 
 
+<div class="row epic">
 
-<div class="reward epic">
+    <div class="row-rank">
+        <span>DKP Rank</span>
+        <strong>TOP 2</strong>
+    </div>
 
-<div class="rank">
-<span>DKP Rank</span>
-<strong>TOP 2</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Epic Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Epic Trophy
+        </div>
+    </div>
 
 </div>
 
 
+<div class="row epic">
 
-<div class="reward epic">
+    <div class="row-rank">
+        <span>DKP Rank</span>
+        <strong>TOP 3</strong>
+    </div>
 
-<div class="rank">
-<span>DKP Rank</span>
-<strong>TOP 3</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Epic Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Epic Trophy
+        </div>
+    </div>
 
 </div>
 
 
+<div class="row elite">
 
-<div class="reward elite">
+    <div class="row-rank">
+        <span>DKP Rank</span>
+        <strong>TOP 4–8</strong>
+    </div>
 
-<div class="rank">
-<span>DKP Rank</span>
-<strong>TOP 4–8</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Elite Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Elite Trophy
+        </div>
+    </div>
 
 </div>
 
 
+<div class="row advanced">
 
-<div class="reward advanced">
+    <div class="row-rank">
+        <span>DKP Rank</span>
+        <strong>TOP 9–18</strong>
+    </div>
 
-<div class="rank">
-<span>DKP Rank</span>
-<strong>TOP 9–18</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Advanced Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Advanced Trophy
+        </div>
+    </div>
 
 </div>
 
@@ -1709,178 +2258,302 @@ Advanced Trophy
 </div>
 
 
-</div>
-</section>
 
+<!-- FORT REWARDS -->
 
+<div class="category">
 
-<div class="container">
-<div class="divider"></div>
-</div>
+<div class="category-header">
 
+    <div class="category-left">
 
+        <div class="category-icon">
+            ⛺
+        </div>
 
-<!-- FORTS -->
+        <div>
+            <h3>Weekly Fort Rally Performance</h3>
+            <small>Only 100+ Forts</small>
+        </div>
 
-<section>
-
-<div class="container">
-
-
-<div class="section-heading">
-
-<div class="eyebrow">
-Home Kingdom
-</div>
-
-<h2>
-Fort Rally Performance
-</h2>
-
-<p>
-Weekly ranking based on your
-fort rally activity.
-Only players completing
-<strong>100 or more forts</strong>
-are eligible.
-</p>
+    </div>
 
 </div>
 
 
 <div class="notice">
 
-<strong>Eligibility:</strong>
-Minimum 100 completed forts
-during the reward period.
+    <strong>Eligibility:</strong>
+    Only governors completing at least
+    <strong>100 forts</strong>
+    during the weekly period are eligible.
 
 </div>
 
 
-<div class="rewards">
+<div class="rows">
 
 
-<div class="reward legendary">
+<div class="row legendary">
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 1</strong>
-</div>
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 1</strong>
+    </div>
 
-<div class="reward-info">
+    <div class="row-info">
 
-<div class="trophy">
-Legendary Trophy
-</div>
+        <div class="row-name">
+            Legendary Trophy
+        </div>
 
-<div class="reward-value">
+        <div class="row-value">
+            <b>$5 Flux</b> ·
+            <b>40M</b> Food ·
+            <b>40M</b> Wood ·
+            <b>20M</b> Stone ·
+            <b>20M</b> Gold
+        </div>
 
-<b>$5 Flux</b> ·
-<b>40M</b> Food ·
-<b>40M</b> Wood ·
-<b>20M</b> Stone ·
-<b>20M</b> Gold
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<div class="row epic">
 
-<div class="reward epic">
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 2</strong>
+    </div>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 2</strong>
-</div>
+    <div class="row-info">
 
-<div class="reward-info">
+        <div class="row-name">
+            Epic Trophy
+        </div>
 
-<div class="trophy">
-Epic Trophy
-</div>
+        <div class="row-value">
+            <b>30M</b> Food ·
+            <b>30M</b> Wood ·
+            <b>15M</b> Stone ·
+            <b>15M</b> Gold
+        </div>
 
-<div class="reward-value">
-
-<b>30M</b> Food ·
-<b>30M</b> Wood ·
-<b>15M</b> Stone ·
-<b>15M</b> Gold
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<div class="row epic">
 
-<div class="reward epic">
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 3</strong>
+    </div>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 3</strong>
-</div>
+    <div class="row-info">
 
-<div class="reward-info">
+        <div class="row-name">
+            Epic Trophy
+        </div>
 
-<div class="trophy">
-Epic Trophy
-</div>
+        <div class="row-value">
+            <b>20M</b> Food ·
+            <b>20M</b> Wood
+        </div>
 
-<div class="reward-value">
-
-<b>20M</b> Food ·
-<b>20M</b> Wood
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<div class="row elite">
 
-<div class="reward elite">
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 4–8</strong>
+    </div>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 4–8</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Elite Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Elite Trophy
+        </div>
+    </div>
 
 </div>
 
 
+<div class="row advanced">
 
-<div class="reward advanced">
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 9–18</strong>
+    </div>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 9–18</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Advanced Trophy
-</div>
-
-</div>
+    <div class="row-info">
+        <div class="row-name">
+            Advanced Trophy
+        </div>
+    </div>
 
 </div>
 
 
 </div>
+</div>
+
+
+
+<!-- MOBILIZATION REWARDS -->
+
+<div class="category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            ◆
+        </div>
+
+        <div>
+            <h3>Alliance Mobilization Performance</h3>
+            <small>Alliance Ranking</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row legendary">
+
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 1</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Legendary Trophy
+        </div>
+
+        <div class="row-value">
+            <b>50M</b> Food ·
+            <b>50M</b> Wood ·
+            <b>25M</b> Stone ·
+            <b>25M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row epic">
+
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 2</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Epic Trophy
+        </div>
+
+        <div class="row-value">
+            <b>35M</b> Food ·
+            <b>35M</b> Wood ·
+            <b>15M</b> Stone ·
+            <b>15M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row epic">
+
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 3</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Epic Trophy
+        </div>
+
+        <div class="row-value">
+            <b>25M</b> Food ·
+            <b>25M</b> Wood ·
+            <b>10M</b> Stone ·
+            <b>10M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row elite">
+
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 4</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Elite Trophy
+        </div>
+
+        <div class="row-value">
+            <b>20M</b> Food ·
+            <b>20M</b> Wood
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row elite">
+
+    <div class="row-rank">
+        <span>Rank</span>
+        <strong>TOP 5</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Elite Trophy
+        </div>
+
+        <div class="row-value">
+            <b>10M</b> Food ·
+            <b>10M</b> Wood
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
 
 </div>
 </section>
@@ -1888,201 +2561,899 @@ Advanced Trophy
 
 
 <div class="container">
-<div class="divider"></div>
+    <div class="divider"></div>
 </div>
 
 
 
-<!-- MOBILIZATION -->
+<!-- =======================================================
+     PENALTIES
+======================================================= -->
 
-<section>
+<section id="penalties">
 
 <div class="container">
 
 
-<div class="section-heading">
+<div class="section-header penalty-header">
 
-<div class="eyebrow">
-Alliance
-</div>
+    <div class="section-label">
+        Kingdom Regulations
+    </div>
 
-<h2>
-Alliance Mobilization
-</h2>
+    <h2>
+        Penalties & Fines
+    </h2>
 
-<p>
-Rewards for the highest
-Alliance Mobilization performers.
-</p>
-
-</div>
-
-
-
-<div class="rewards">
-
-
-<div class="reward legendary">
-
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 1</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Legendary Trophy
-</div>
-
-<div class="reward-value">
-
-<b>50M</b> Food ·
-<b>50M</b> Wood ·
-<b>25M</b> Stone ·
-<b>25M</b> Gold
+    <p>
+        Violations may result in resource fines,
+        alliance removal, kingdom removal or zeroing depending
+        on severity and repeated offenses.
+    </p>
 
 </div>
 
-</div>
+
+<div class="penalty-intro">
+
+    <p>
+
+        Kingdom 3922 rules are designed to protect active players,
+        maintain fair participation and ensure that kingdom resources
+        and leadership efforts are respected.
+
+        Repeated violations may result in progressively
+        stronger penalties.
+
+    </p>
 
 </div>
 
 
 
-<div class="reward epic">
+<!-- FORT PENALTIES -->
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 2</strong>
-</div>
+<div class="category penalty-category">
 
-<div class="reward-info">
+<div class="category-header">
 
-<div class="trophy">
-Epic Trophy
-</div>
+    <div class="category-left">
 
-<div class="reward-value">
+        <div class="category-icon">
+            ⛺
+        </div>
 
-<b>35M</b> Food ·
-<b>35M</b> Wood ·
-<b>15M</b> Stone ·
-<b>15M</b> Gold
+        <div>
+            <h3>Forts</h3>
+            <small>Weekly Activity Requirement</small>
+        </div>
 
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<div class="notice notice-danger">
 
-<div class="reward epic">
+    <strong>Minimum Requirement:</strong>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 3</strong>
-</div>
+    100 forts per week.
 
-<div class="reward-info">
-
-<div class="trophy">
-Epic Trophy
-</div>
-
-<div class="reward-value">
-
-<b>25M</b> Food ·
-<b>25M</b> Wood ·
-<b>10M</b> Stone ·
-<b>10M</b> Gold
-
-</div>
-
-</div>
+    This rule does not apply during Lost Kingdom.
+    It only applies during off-season and Home Kingdom periods.
 
 </div>
 
 
-
-<div class="reward elite">
-
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 4</strong>
-</div>
-
-<div class="reward-info">
-
-<div class="trophy">
-Elite Trophy
-</div>
-
-<div class="reward-value">
-
-<b>20M</b> Food ·
-<b>20M</b> Wood
-
-</div>
-
-</div>
-
-</div>
+<div class="rows">
 
 
+<div class="row penalty-low">
 
-<div class="reward elite">
+    <div class="row-rank">
+        <span>Failure</span>
+        <strong>Week 1</strong>
+    </div>
 
-<div class="rank">
-<span>Rank</span>
-<strong>TOP 5</strong>
-</div>
+    <div class="row-info">
 
-<div class="reward-info">
+        <div class="row-name">
+            Activity Fine
+        </div>
 
-<div class="trophy">
-Elite Trophy
-</div>
+        <div class="row-value">
+            <b>40M</b> Food ·
+            <b>40M</b> Wood ·
+            <b>20M</b> Stone ·
+            <b>20M</b> Gold
+        </div>
 
-<div class="reward-value">
-
-<b>10M</b> Food ·
-<b>10M</b> Wood
-
-</div>
-
-</div>
+    </div>
 
 </div>
 
 
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>Failure</span>
+        <strong>Week 2</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Escalated Fine
+        </div>
+
+        <div class="row-value">
+            <b>80M</b> Food ·
+            <b>80M</b> Wood ·
+            <b>40M</b> Stone ·
+            <b>40M</b> Gold
+        </div>
+
+    </div>
+
 </div>
+
+
+<div class="row penalty-high">
+
+    <div class="row-rank">
+        <span>Failure</span>
+        <strong>Week 3</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Major Fine
+        </div>
+
+        <div class="row-value">
+            <b>240M</b> Food ·
+            <b>240M</b> Wood ·
+            <b>120M</b> Stone ·
+            <b>120M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-zero">
+
+    <div class="row-rank">
+        <span>Failure</span>
+        <strong>Week 4</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Severe Inactivity
+        </div>
+
+        <div class="row-value">
+
+            <b>All RSS outside the bag</b>
+            + Kick from Kingdom.
+
+            Refusing or insisting results in
+            <b>Complete Zero</b>.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<!-- GUARDIANS -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            🛡
+        </div>
+
+        <div>
+            <h3>Guardians</h3>
+            <small>Unauthorized Guardian Kills</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice notice-danger">
+
+    Killing Guardians before the time established by management
+    results in progressive penalties.
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-low">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>1st</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Guardian Fine
+        </div>
+
+        <div class="row-value">
+            <b>40M</b> Food ·
+            <b>40M</b> Wood ·
+            <b>20M</b> Stone ·
+            <b>20M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>2nd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Escalated Fine
+        </div>
+
+        <div class="row-value">
+            <b>80M</b> Food ·
+            <b>80M</b> Wood ·
+            <b>40M</b> Stone ·
+            <b>40M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-high">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>3rd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Major Fine
+        </div>
+
+        <div class="row-value">
+            <b>240M</b> Food ·
+            <b>240M</b> Wood ·
+            <b>120M</b> Stone ·
+            <b>120M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-zero">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>4th</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Zero
+        </div>
+
+        <div class="row-value">
+            <b>Zero without warning.</b>
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<!-- BAULUR -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            ⚒
+        </div>
+
+        <div>
+            <h3>Baulur Ironhand</h3>
+            <small>R4 Management Authorization</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice notice-danger">
+
+    Killing Baulur Ironhand without R4 management authorization
+    results in escalating penalties.
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-low">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>1st</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Unauthorized Kill
+        </div>
+
+        <div class="row-value">
+            <b>30M</b> Food ·
+            <b>30M</b> Wood ·
+            <b>15M</b> Stone ·
+            <b>15M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>2nd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Escalated Fine
+        </div>
+
+        <div class="row-value">
+            <b>60M</b> Food ·
+            <b>60M</b> Wood ·
+            <b>30M</b> Stone ·
+            <b>30M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-high">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>3rd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Major Fine
+        </div>
+
+        <div class="row-value">
+            <b>120M</b> Food ·
+            <b>120M</b> Wood ·
+            <b>60M</b> Stone ·
+            <b>60M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-zero">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>4th</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Kingdom Removal
+        </div>
+
+        <div class="row-value">
+
+            Kick from Kingdom 3922.
+
+            <b>15 days</b>
+            allowed for migration.
+
+            Failure to migrate results in
+            <b>Zero</b>.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div
+    class="notice notice-danger"
+    style="margin-top:16px;"
+>
+
+    <strong>Kingdom Buff Guardian Rule:</strong>
+
+    Killing Guardians before the designated time
+    during Kingdom Buff activation results in an immediate
+
+    <strong>
+        100M Food · 100M Wood · 100M Stone · 100M Gold
+    </strong>
+
+    payment.
+
+</div>
+
+
+</div>
+
+
+
+<!-- MOBILIZATION PENALTY -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            ◆
+        </div>
+
+        <div>
+            <h3>Alliance Mobilization</h3>
+            <small>Minimum 1500 Points</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice notice-danger">
+
+    <strong>Minimum Requirement:</strong>
+    1500 points.
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>Score</span>
+        <strong>&lt;1500</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Mobilization Fine
+        </div>
+
+        <div class="row-value">
+            <b>40M</b> Food ·
+            <b>40M</b> Wood ·
+            <b>20M</b> Stone ·
+            <b>20M</b> Gold
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-high">
+
+    <div class="row-rank">
+        <span>Score</span>
+        <strong>&lt;1200</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Alliance Removal
+        </div>
+
+        <div class="row-value">
+
+            Standard fine applies.
+
+            Player will also be
+            <b>removed from K22V</b>
+            during Alliance Mobilization reward distribution.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<!-- LOW DKP -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            ⚠
+        </div>
+
+        <div>
+            <h3>Deadweights / Low DKP</h3>
+            <small>KVK Performance Enforcement</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-zero">
+
+    <div class="row-rank">
+        <span>DKP</span>
+        <strong>Below Min</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Severe Underperformance
+        </div>
+
+        <div class="row-value">
+
+            Direct
+            <b>Kick or Zero</b>.
+
+            Player receives
+            <b>15 days</b>
+            to migrate.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>DKP</span>
+        <strong>Close</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Near Minimum Requirement
+        </div>
+
+        <div class="row-value">
+
+            <b>30M Food · 30M Wood · 30M Stone · 30M Gold</b>
+
+            every week until the next KVK war.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<!-- LEADERSHIP -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            📍
+        </div>
+
+        <div>
+            <h3>Leadership Markers & Orders</h3>
+            <small>Kingdom Command Structure</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice notice-danger">
+
+    Failure to follow leadership markers,
+    instructions or direct orders will be evaluated
+    depending on the seriousness of the situation.
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-high">
+
+    <div class="row-rank">
+        <span>Penalty</span>
+        <strong>Variable</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Leadership Violation
+        </div>
+
+        <div class="row-value">
+
+            May result in
+
+            <b>RSS payment</b>,
+
+            <b>Kingdom removal</b>
+
+            or
+
+            <b>Zero</b>.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<!-- AOO -->
+
+<div class="category penalty-category">
+
+<div class="category-header">
+
+    <div class="category-left">
+
+        <div class="category-icon">
+            ⚔
+        </div>
+
+        <div>
+            <h3>Ark of Osiris</h3>
+            <small>Registered Player Attendance</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="notice notice-danger">
+
+    Registering for Ark of Osiris and failing
+    to participate results in progressive penalties.
+
+</div>
+
+
+<div class="rows">
+
+
+<div class="row penalty-low">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>1st</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            AOO No-Show
+        </div>
+
+        <div class="row-value">
+
+            <b>30M</b> Food ·
+            <b>30M</b> Wood ·
+            <b>15M</b> Stone ·
+            <b>15M</b> Gold
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-medium">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>2nd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Escalated AOO Fine
+        </div>
+
+        <div class="row-value">
+
+            <b>60M</b> Food ·
+            <b>60M</b> Wood ·
+            <b>30M</b> Stone ·
+            <b>30M</b> Gold
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row penalty-zero">
+
+    <div class="row-rank">
+        <span>Offense</span>
+        <strong>3rd</strong>
+    </div>
+
+    <div class="row-info">
+
+        <div class="row-name">
+            Kingdom-Wide AOO Ban
+        </div>
+
+        <div class="row-value">
+
+            Player will be completely forbidden
+            from participating in Ark of Osiris
+            from all Kingdom 3922 alliances
+
+            +
+
+            <b>120M</b> Food ·
+            <b>120M</b> Wood ·
+            <b>60M</b> Stone ·
+            <b>60M</b> Gold
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+</div>
+
 
 </div>
 </section>
 
 
 
-<!-- FINAL MESSAGE -->
+<!-- =======================================================
+     FINAL CTA
+======================================================= -->
 
 <div class="container">
 
-<div class="cta">
+    <div class="cta">
 
-<div class="cta-symbol">
-✦
-</div>
+        <div class="cta-icon">
+            ✦
+        </div>
 
-<h2>
+        <h2>
 
-Stay active.
-Earn your rank.
-<span>Claim your reward.</span>
+            Stay active.
+            Earn your rank.
+            <span>
+                Claim your reward.
+            </span>
 
-</h2>
+        </h2>
 
-</div>
+    </div>
 
 </div>
 
@@ -2093,9 +3464,9 @@ Earn your rank.
 
 <footer>
 
-KINGDOM 3922
-&nbsp; • &nbsp;
-REWARD SYSTEM
+    KINGDOM 3922
+    &nbsp; • &nbsp;
+    REWARD & POLICY SYSTEM
 
 </footer>
 
