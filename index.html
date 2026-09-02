@@ -190,7 +190,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    ============================================================ */
 .ledger-box{border:1px solid var(--rule);background:var(--plate);overflow:hidden}
 .dkp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.dkp-wrap .dkp-table{min-width:940px}
+.dkp-wrap .dkp-table{min-width:1080px}
 @media(max-width:720px){.dkp-wrap .dkp-table{min-width:0}}
 table.ledger{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 table.ledger thead th{
@@ -342,6 +342,29 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 .bar.under i{background:var(--crimson)}
 
 .empty{padding:30px 16px;text-align:center;color:var(--ink-faint)}
+
+/* durum rozeti */
+.pill{
+  display:inline-block;padding:4px 10px;border-radius:2px;
+  font-family:Oswald,sans-serif;font-size:12.5px;letter-spacing:.03em;white-space:nowrap;
+}
+.pill.met{background:rgba(91,156,134,.16);border:1px solid rgba(91,156,134,.5);color:#8fd6bd}
+.pill.short{background:rgba(192,32,47,.15);border:1px solid rgba(192,32,47,.5);color:#f0a3aa}
+
+/* tek oyuncu sonucu */
+.verdict{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
+  padding:20px 22px;margin-bottom:16px;border:1px solid var(--rule);background:var(--ground-deep)}
+.verdict[hidden]{display:none}
+.verdict.met{border-left:3px solid var(--moss);background:linear-gradient(100deg,rgba(91,156,134,.1),transparent 55%),var(--ground-deep)}
+.verdict.short{border-left:3px solid var(--crimson);background:linear-gradient(100deg,rgba(192,32,47,.1),transparent 55%),var(--ground-deep)}
+.verdict h4{font-size:21px;font-weight:600}
+.verdict.met h4{color:#8fd6bd}
+.verdict.short h4{color:var(--crimson-lit)}
+.verdict p{margin-top:4px;color:var(--ink-dim);font-size:15px}
+.verdict .who-name{font-family:Oswald,sans-serif;font-size:14px;color:var(--ink-faint);letter-spacing:.03em}
+.verdict-nums{display:flex;gap:26px;text-align:right}
+.verdict-nums div span{display:block;font-family:Oswald,sans-serif;font-size:12px;color:var(--ink-faint);letter-spacing:.05em}
+.verdict-nums div b{display:block;font-family:Oswald,sans-serif;font-weight:500;font-size:20px;font-variant-numeric:tabular-nums}
 
 .dkp-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 
@@ -775,22 +798,21 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     <div><span>Scan period</span><b id="m-period">—</b></div>
     <div><span>DKP formula</span><b id="m-formula">—</b></div>
     <div><span>Governors scanned</span><b id="m-players">—</b></div>
-    <div><span>Minimum DKP</span><b id="m-min">—</b></div>
+    <div><span>DKP requirement</span><b id="m-req">—</b></div>
   </div>
 
   <div class="dkp-tools">
     <input type="search" id="dkp-search" placeholder="Search by name or governor ID" aria-label="Search governors">
     <div class="chips" role="group" aria-label="Filters">
       <button class="chip" data-filter="all" aria-pressed="true">Everyone</button>
-      <button class="chip warn" data-filter="below" aria-pressed="false">Below minimum<span class="n"></span></button>
-      <button class="chip" data-filter="reached" aria-pressed="false">Goal reached<span class="n"></span></button>
-      <button class="chip" data-filter="missed" aria-pressed="false">Goal missed<span class="n"></span></button>
+      <button class="chip" data-filter="met" aria-pressed="false">Requirement met<span class="n"></span></button>
+      <button class="chip warn" data-filter="short" aria-pressed="false">Below requirement<span class="n"></span></button>
     </div>
     <select id="dkp-sort" aria-label="Sort by">
       <option value="dkp|desc">DKP — high to low</option>
       <option value="dkp|asc">DKP — low to high</option>
-      <option value="pct|desc">Goal % — high to low</option>
-      <option value="pct|asc">Goal % — low to high</option>
+      <option value="pct|desc">Completion — high to low</option>
+      <option value="pct|asc">Completion — low to high</option>
       <option value="power|desc">Power — high to low</option>
       <option value="acclaim|desc">Acclaim — high to low</option>
       <option value="t4|desc">T4 kills — high to low</option>
@@ -802,6 +824,8 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     <span id="dkp-count-line"></span>
   </div>
 
+  <div class="verdict" id="verdict" hidden></div>
+
   <div class="ledger-box dkp-wrap">
     <table class="ledger dkp-table">
       <thead>
@@ -810,7 +834,8 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
           <th scope="col" class="s" data-key="name">Governor<span class="ar"></span></th>
           <th scope="col" class="s" data-key="power">Power<span class="ar"></span></th>
           <th scope="col" class="s" data-key="dkp">DKP<span class="ar"></span></th>
-          <th scope="col" class="s" data-key="pct">Goal<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="req">Required<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="pct">Completion<span class="ar"></span></th>
           <th scope="col" class="s" data-key="acclaim">Acclaim<span class="ar"></span></th>
           <th scope="col" class="s" data-key="t4">T4 kills<span class="ar"></span></th>
           <th scope="col" class="s" data-key="t5">T5 kills<span class="ar"></span></th>
@@ -818,7 +843,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
           <th scope="col" class="s" data-key="honor">Honor<span class="ar"></span></th>
         </tr>
       </thead>
-      <tbody id="dkp-rows"><tr><td class="empty" colspan="10">Loading the scan…</td></tr></tbody>
+      <tbody id="dkp-rows"><tr><td class="empty" colspan="11">Loading the scan…</td></tr></tbody>
     </table>
   </div>
 
@@ -840,7 +865,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
-  <span id="build">build 3 &middot; <span id="data-stamp">no scan loaded</span></span>
+  <span id="build">build 4 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
@@ -906,40 +931,48 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
   const searchEl = document.getElementById('dkp-search');
   const sortEl   = document.getElementById('dkp-sort');
   const countEl  = document.getElementById('dkp-count-line');
+  const verdictEl= document.getElementById('verdict');
   const chips    = [...document.querySelectorAll('.chip')];
   const heads    = [...document.querySelectorAll('.dkp-table th.s')];
 
-  const DEFAULT_MIN = 40000000;
-  let data = null, minDkp = DEFAULT_MIN;
+  let data = null;
+  let basis = 'base', mult = 1.75, minDkp = 40000000;
   let sortKey = 'dkp', sortDir = 'desc', filter = 'all';
 
   const fmt = n => {
-    if (n === undefined || n === null || isNaN(n)) return '<span class="none">\u2014</span>';
+    if (n === undefined || n === null || isNaN(n)) return '\u2014';
     if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(2) + 'B';
     if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1) + 'M';
     if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + 'K';
     return String(Math.round(n));
   };
+  const cell = n => (n === undefined || n === null || isNaN(n))
+    ? '<span class="none">\u2014</span>' : fmt(n);
   const esc = s => String(s == null ? '' : s)
     .replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
   const tier = r => r === 1 ? 't-legendary' : r <= 3 ? 't-epic' : r <= 8 ? 't-elite' : r <= 18 ? 't-advanced' : 't-plain';
-  const pctOf = p => (p.goal ? (p.dkp / p.goal) * 100 : null);
 
-  function goalCell(p) {
-    const pct = pctOf(p);
-    if (pct === null) return '<span class="none">\u2014</span>';
-    const r = Math.round(pct);
-    const cls = r >= 100 ? '' : r >= 60 ? ' short' : ' under';
-    return '<span class="goal">' + r + '%<em>of ' + fmt(p.goal) + '</em>' +
-           '<span class="bar' + cls + '"><i style="width:' + Math.min(100, r) + '%"></i></span></span>';
+  /* --- kural: güç × çarpan --- */
+  const powerOf = p => (basis === 'current' ? p.power : (p.base !== undefined ? p.base : p.power));
+  const reqOf   = p => { const w = powerOf(p); return w ? w * mult : null; };
+  const pctOf   = p => { const r = reqOf(p); return r ? (p.dkp / r) * 100 : null; };
+  const met     = p => { const r = reqOf(p); return r === null ? null : p.dkp >= r; };
+
+  function reqCells(p) {
+    const r = reqOf(p), pct = pctOf(p);
+    if (r === null) return '<td data-label="Required"><span class="none">\u2014</span></td>' +
+                           '<td data-label="Completion"><span class="none">\u2014</span></td>';
+    const v = Math.round(pct), ok = p.dkp >= r;
+    const cls = ok ? '' : v >= 60 ? ' short' : ' under';
+    return '<td data-label="Required">' + fmt(r) + '</td>' +
+      '<td data-label="Completion"><span class="goal">' + v + '%' +
+        '<span class="bar' + cls + '"><i style="width:' + Math.min(100, v) + '%"></i></span></span></td>';
   }
 
   function current() {
     let list = data.players.slice();
-
-    if (filter === 'below')        list = list.filter(p => p.dkp < minDkp);
-    else if (filter === 'reached') list = list.filter(p => pctOf(p) !== null && pctOf(p) >= 100);
-    else if (filter === 'missed')  list = list.filter(p => pctOf(p) !== null && pctOf(p) < 100);
+    if (filter === 'met')        list = list.filter(p => met(p) === true);
+    else if (filter === 'short') list = list.filter(p => met(p) === false);
 
     const q = searchEl.value.trim().toLowerCase();
     if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || String(p.id || '').includes(q));
@@ -948,7 +981,8 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     list.sort((a, b) => {
       let x, y;
       if (sortKey === 'name') return a.name.localeCompare(b.name) * dir;
-      if (sortKey === 'pct') { x = pctOf(a); y = pctOf(b); }
+      if (sortKey === 'pct')      { x = pctOf(a); y = pctOf(b); }
+      else if (sortKey === 'req') { x = reqOf(a); y = reqOf(b); }
       else { x = a[sortKey]; y = b[sortKey]; }
       if (x === undefined || x === null) return 1;
       if (y === undefined || y === null) return -1;
@@ -957,28 +991,57 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     return list;
   }
 
+  function showVerdict(list) {
+    const q = searchEl.value.trim();
+    if (!q || list.length !== 1) { verdictEl.hidden = true; return; }
+    const p = list[0], r = reqOf(p), ok = met(p);
+    if (r === null) { verdictEl.hidden = true; return; }
+    const diff = Math.abs(p.dkp - r);
+    verdictEl.className = 'verdict ' + (ok ? 'met' : 'short');
+    verdictEl.innerHTML =
+      '<div>' +
+        '<div class="who-name">' + esc(p.name) + (p.id ? ' \u00b7 #' + esc(p.id) : '') + ' \u00b7 rank ' + p.rank + '</div>' +
+        '<h4>' + (ok ? 'DKP requirement met' : 'DKP requirement not met \u2014 penalty risk') + '</h4>' +
+        '<p>' + (ok
+          ? 'Scored ' + fmt(diff) + ' above the ' + fmt(r) + ' required for ' + fmt(powerOf(p)) + ' power.'
+          : 'Short by ' + fmt(diff) + '. The requirement is ' + fmt(r) + ' for ' + fmt(powerOf(p)) + ' power.') +
+        '</p>' +
+      '</div>' +
+      '<div class="verdict-nums">' +
+        '<div><span>Scored</span><b>' + fmt(p.dkp) + '</b></div>' +
+        '<div><span>Required</span><b>' + fmt(r) + '</b></div>' +
+        '<div><span>Completion</span><b>' + Math.round(pctOf(p)) + '%</b></div>' +
+      '</div>';
+    verdictEl.hidden = false;
+  }
+
   function render() {
     const list = current();
+    showVerdict(list);
     if (!list.length) {
-      rowsEl.innerHTML = '<tr><td class="empty" colspan="10">No governor matches this search.</td></tr>';
+      rowsEl.innerHTML = '<tr><td class="empty" colspan="11">No governor matches this search.</td></tr>';
       countEl.textContent = '0 of ' + data.players.length;
       return;
     }
-    rowsEl.innerHTML = list.map(p =>
-      '<tr class="' + tier(p.rank) + (p.dkp < minDkp ? ' below' : '') + '">' +
+    rowsEl.innerHTML = list.map(p => {
+      const ok = met(p);
+      return '<tr class="' + tier(p.rank) + (ok === false ? ' below' : '') + '">' +
         '<th scope="row">' + p.rank + '</th>' +
-        '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b><span>' +
-          (p.id ? '#' + esc(p.id) : '') + '</span>' +
-          (p.alliance ? '<i>' + esc(p.alliance) + '</i>' : '') + '</td>' +
-        '<td data-label="Power">' + fmt(p.power) + '</td>' +
-        '<td class="dkp-cell" data-label="DKP">' + fmt(p.dkp) + '</td>' +
-        '<td data-label="Goal">' + goalCell(p) + '</td>' +
-        '<td data-label="Acclaim">' + fmt(p.acclaim) + '</td>' +
-        '<td data-label="T4 kills">' + fmt(p.t4) + '</td>' +
-        '<td data-label="T5 kills">' + fmt(p.t5) + '</td>' +
-        '<td data-label="Deads">' + fmt(p.deads) + '</td>' +
-        '<td data-label="Honor">' + fmt(p.honor) + '</td>' +
-      '</tr>').join('');
+        '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b>' +
+          (p.alliance ? '<i>' + esc(p.alliance) + '</i>' : '') +
+          '<span>' + (p.id ? '#' + esc(p.id) : '') + '</span></td>' +
+        '<td data-label="Power">' + cell(p.power) + '</td>' +
+        '<td class="dkp-cell" data-label="DKP">' + cell(p.dkp) + '</td>' +
+        reqCells(p) +
+        '<td data-label="Status">' + (ok === null ? '<span class="none">\u2014</span>'
+          : ok ? '<span class="pill met">Met</span>' : '<span class="pill short">Short</span>') + '</td>' +
+        '<td data-label="Acclaim">' + cell(p.acclaim) + '</td>' +
+        '<td data-label="T4 kills">' + cell(p.t4) + '</td>' +
+        '<td data-label="T5 kills">' + cell(p.t5) + '</td>' +
+        '<td data-label="Deads">' + cell(p.deads) + '</td>' +
+        '<td data-label="Honor">' + cell(p.honor) + '</td>' +
+      '</tr>';
+    }).join('');
     countEl.textContent = list.length === data.players.length
       ? list.length + ' governors'
       : list.length + ' of ' + data.players.length;
@@ -1025,26 +1088,30 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 
   function apply(d) {
     data = d;
-    minDkp = d.minDkp || DEFAULT_MIN;
+    const req = d.requirement || {};
+    basis = req.basis || 'base';
+    mult = req.multiplier || 1.75;
+    minDkp = d.minDkp || 40000000;
+
     const per = d.period || {};
     document.getElementById('m-period').textContent =
       per.start && per.end ? per.start + ' \u2013 ' + per.end : (d.updated || '\u2014');
     document.getElementById('m-formula').textContent = d.formula || '\u2014';
     document.getElementById('m-players').textContent = d.players.length;
-    document.getElementById('m-min').textContent = fmt(minDkp).replace(/<[^>]+>/g, '');
-    const stamp = document.getElementById('data-stamp');
-    if (stamp) stamp.textContent = 'scan data ' + String(d.updated || '').slice(0, 10) +
-      (d.players.some(p => p.acclaim !== undefined) ? ' (with acclaim)' : ' (no acclaim)');
+    document.getElementById('m-req').textContent =
+      (basis === 'current' ? 'Current' : 'Base') + ' power \u00d7 ' + mult;
 
-    const below = d.players.filter(p => p.dkp < minDkp).length;
-    const reached = d.players.filter(p => pctOf(p) !== null && pctOf(p) >= 100).length;
+    const okCount = d.players.filter(p => met(p) === true).length;
     chips.forEach(c => {
       const n = c.querySelector('.n');
       if (!n) return;
-      const f = c.dataset.filter;
-      n.textContent = f === 'below' ? below : f === 'reached' ? reached
-        : f === 'missed' ? d.players.filter(p => pctOf(p) !== null && pctOf(p) < 100).length : '';
+      n.textContent = c.dataset.filter === 'met' ? okCount
+        : c.dataset.filter === 'short' ? d.players.length - okCount : '';
     });
+
+    const stamp = document.getElementById('data-stamp');
+    if (stamp) stamp.textContent = 'scan data ' + String(d.updated || '').slice(0, 10) +
+      ' \u00b7 requirement ' + basis + ' \u00d7 ' + mult;
     render();
   }
 
@@ -1055,7 +1122,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
       .then(r => { if (!r.ok) throw 0; return r.json(); })
       .then(apply)
       .catch(() => {
-        rowsEl.innerHTML = '<tr><td class="empty" colspan="10">Scan data not available right now.</td></tr>';
+        rowsEl.innerHTML = '<tr><td class="empty" colspan="11">Scan data not available right now.</td></tr>';
       });
   }
 })();
