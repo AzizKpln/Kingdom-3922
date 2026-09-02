@@ -840,6 +840,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
+  <span id="build">build 3 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
@@ -1031,6 +1032,9 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     document.getElementById('m-formula').textContent = d.formula || '\u2014';
     document.getElementById('m-players').textContent = d.players.length;
     document.getElementById('m-min').textContent = fmt(minDkp).replace(/<[^>]+>/g, '');
+    const stamp = document.getElementById('data-stamp');
+    if (stamp) stamp.textContent = 'scan data ' + String(d.updated || '').slice(0, 10) +
+      (d.players.some(p => p.acclaim !== undefined) ? ' (with acclaim)' : ' (no acclaim)');
 
     const below = d.players.filter(p => p.dkp < minDkp).length;
     const reached = d.players.filter(p => pctOf(p) !== null && pctOf(p) >= 100).length;
