@@ -256,22 +256,19 @@ td.award,td.wide{text-align:left;font-size:15.5px;color:var(--ink-dim)}
    PRE-KVK
    ============================================================ */
 .prekvk{padding:52px 0 20px}
-.pk-table th[scope="row"]{width:52px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
-.pk-table .t-legendary th[scope="row"],
-.pk-table .t-epic th[scope="row"],
-.pk-table .t-elite th[scope="row"],
-.pk-table .t-advanced th[scope="row"]{font-size:17px}
-.pk-table td.total{font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--gold-lit)}
+
+.pk-table td{color:var(--ink-dim);font-variant-numeric:tabular-nums}
+.pk-table td.total{font-family:Oswald,sans-serif;font-weight:500;font-size:17px;color:var(--gold-lit)}
+.pk-table .mixcell{width:150px}
 .pk-table tbody tr:nth-child(even){background:rgba(226,233,247,.016)}
 .pk-table tbody tr:hover{background:rgba(224,169,46,.05)}
-.pk-table td,.pk-table th[scope="row"]{padding:11px 14px;font-size:15px}
 .pk-table thead th{padding:11px 14px;font-size:12.5px}
 .pk-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .pk-wrap .pk-table{min-width:820px}
 @media(max-width:720px){.pk-wrap .pk-table{min-width:0}}
 
 /* aşama dağılımı çubuğu */
-.mix{display:flex;height:5px;width:120px;margin-left:auto;overflow:hidden;background:rgba(226,233,247,.08)}
+.mix{display:flex;height:6px;width:120px;margin-left:auto;overflow:hidden;background:rgba(226,233,247,.07)}
 .mix i{display:block;height:100%}
 .mix .m1{background:var(--frost)}
 .mix .m2{background:var(--moss)}
@@ -386,25 +383,41 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
 .dkp-table thead th{padding:11px 14px;font-size:12.5px}
 .dkp-table tbody tr:nth-child(even){background:rgba(226,233,247,.016)}
 .dkp-table tbody tr:hover{background:rgba(224,169,46,.05)}
-.dkp-table td,.dkp-table th[scope="row"]{padding:11px 14px;font-size:15px;vertical-align:middle}
-.dkp-table th[scope="row"]{
-  width:52px;font-size:15px;color:var(--ink-faint);font-variant-numeric:tabular-nums;
-}
-.dkp-table .t-legendary th[scope="row"],
-.dkp-table .t-epic th[scope="row"],
-.dkp-table .t-elite th[scope="row"],
-.dkp-table .t-advanced th[scope="row"]{font-size:17px}
+.dkp-table td,.dkp-table th[scope="row"],
+.pk-table td,.pk-table th[scope="row"]{padding:13px 14px;font-size:15px;vertical-align:middle}
+.dkp-table th[scope="row"],.pk-table th[scope="row"]{width:64px;border-left-width:3px}
+
 .dkp-table .who{text-align:left}
-.dkp-table .who{min-width:210px}
-.dkp-table .who b{
-  display:inline-block;font-family:Oswald,sans-serif;font-weight:500;font-size:15.5px;color:var(--ink);
-  max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;
+.ledger .who{text-align:left;min-width:200px}
+.ledger .who b{
+  display:block;font-family:Oswald,sans-serif;font-weight:500;font-size:15.5px;
+  color:var(--ink);line-height:1.25;
+  max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
-.dkp-table .who span{display:block;font-size:12px;color:var(--ink-faint);letter-spacing:.02em}
-.dkp-table .who i{
-  font-style:normal;margin-left:7px;padding:1px 6px;font-family:Oswald,sans-serif;font-size:11.5px;
+.ledger .who span{
+  display:block;margin-top:2px;font-size:12px;color:var(--ink-faint);
+  font-variant-numeric:tabular-nums;letter-spacing:.02em;
+}
+.ledger .who i{
+  font-style:normal;display:inline-block;margin-top:4px;padding:1px 6px;
+  font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.04em;
   border:1px solid rgba(224,169,46,.4);color:var(--gold-lit);border-radius:2px;
 }
+
+/* sıra rozeti */
+.ledger .rk{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;padding:4px 7px;border-radius:2px;
+  border:1px solid transparent;background:rgba(226,233,247,.045);
+  font-family:Oswald,sans-serif;font-weight:500;font-size:14px;color:var(--ink-faint);
+  font-variant-numeric:tabular-nums;
+}
+.t-legendary .rk{background:rgba(224,169,46,.16);border-color:rgba(224,169,46,.5);color:var(--gold-lit)}
+.t-epic .rk{background:rgba(195,204,221,.13);border-color:rgba(195,204,221,.36);color:var(--steel)}
+.t-elite .rk{background:rgba(111,168,214,.13);border-color:rgba(111,168,214,.34);color:#9cc9ea}
+.t-advanced .rk{background:rgba(91,156,134,.13);border-color:rgba(91,156,134,.34);color:#84c0aa}
+tr.below .rk{border-color:rgba(192,32,47,.4)}
+
 .dkp-table td.dkp-cell{font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--gold-lit)}
 tr.below td.dkp-cell{color:var(--crimson-lit)}
 tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
@@ -484,6 +497,11 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
     background:var(--plate);color:var(--ink);border:1px solid var(--rule);border-radius:2px;
   }
   .dkp-table td.dkp-cell{font-size:15px}
+  .ledger .who{padding-left:16px;text-align:left}
+  .ledger .who b{max-width:none;white-space:normal}
+  .ledger th[scope="row"]{width:auto}
+  .mix{margin-left:0;width:100%}
+  .pk-table .mixcell{width:auto}
   .shots{grid-template-columns:1fr}
   .seller{padding:18px}
   .ladder li{grid-template-columns:1fr;gap:10px;padding-right:0}
@@ -1109,7 +1127,7 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
-  <span id="build">build 7 &middot; <span id="data-stamp">no scan loaded</span></span>
+  <span id="build">build 8 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
@@ -1272,10 +1290,10 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
     rowsEl.innerHTML = list.map(p => {
       const ok = met(p);
       return '<tr class="' + tier(p.rank) + (ok === false ? ' below' : '') + '">' +
-        '<th scope="row">' + p.rank + '</th>' +
+        '<th scope="row"><span class="rk">' + p.rank + '</span></th>' +
         '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b>' +
-          (p.alliance ? '<i>' + esc(p.alliance) + '</i>' : '') +
-          '<span>' + (p.id ? '#' + esc(p.id) : '') + '</span></td>' +
+          '<span>' + (p.id ? '#' + esc(p.id) : '') + '</span>' +
+          (p.alliance ? '<i>' + esc(p.alliance) + '</i>' : '') + '</td>' +
         '<td data-label="Power">' + cell(p.power) + '</td>' +
         '<td class="dkp-cell" data-label="DKP">' + cell(p.dkp) + '</td>' +
         reqCells(p) +
@@ -1474,14 +1492,14 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
     }
     rowsEl.innerHTML = list.map(p =>
       '<tr class="' + tier(p.rank) + '">' +
-        '<th scope="row">' + p.rank + '</th>' +
+        '<th scope="row"><span class="rk">' + p.rank + '</span></th>' +
         '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b>' +
-          '<span>' + (p.id ? '#' + esc(p.id) : '') + '</span></td>' +
+          '<span>' + (p.id ? 'ID ' + esc(p.id) : '') + '</span></td>' +
         '<td data-label="Stage I">' + cell(p.s1) + '</td>' +
         '<td data-label="Stage II">' + cell(p.s2) + '</td>' +
         '<td data-label="Stage III">' + cell(p.s3) + '</td>' +
         '<td class="total" data-label="Total">' + fmt(p.total) + '</td>' +
-        '<td data-label="Stage mix">' + mixBar(p) + '</td>' +
+        '<td class="mixcell" data-label="Stage mix">' + mixBar(p) + '</td>' +
       '</tr>').join('');
     countEl.textContent = list.length === data.players.length
       ? list.length + ' governors'
