@@ -1,0 +1,56 @@
+name: DKP güncelle
+
+on:
+  schedule:
+    # UTC 05:20, 13:20, 21:20 — günde üç kez
+    - cron: '20 5,13,21 * * *'
+  workflow_dispatch:        # istediğinde elle de çalıştırabilirsin
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dkp-update
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Playwright kur
+        run: |
+          npm install playwright
+          npx playwright install --with-deps chromium
+
+      - name: Veriyi çek
+        env:
+          STATS_URL: ${{ secrets.STATS_URL }}
+        run: node scripts/scrape-dkp.mjs
+
+      - name: Hata olursa ekran görüntüsünü sakla
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug
+          path: debug/
+          retention-days: 7
+
+      - name: Değişiklik varsa kaydet
+        run: |
+          git config user.name  "dkp-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dkp.json data/_source.json
+          if git diff --staged --quiet; then
+            echo "Veri değişmemiş, commit yok."
+          else
+            git commit -m "DKP taraması — $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
