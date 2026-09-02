@@ -87,7 +87,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .mark-name{font-family:Oswald,sans-serif;font-size:16px;font-weight:600;letter-spacing:.02em;line-height:1.15;display:block}
 .mark-sub{font-size:11.5px;color:var(--ink-faint);letter-spacing:.05em;line-height:1.15;display:block}
 
-.switch{display:flex;gap:3px}
+.switch{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;max-width:100%}
+.switch::-webkit-scrollbar{display:none}
+.switch button{flex:none}
 .switch button{
   position:relative;font-family:Oswald,sans-serif;font-size:14px;font-weight:400;
   padding:9px 17px 11px;border-radius:2px;color:var(--ink-dim);
@@ -249,6 +251,34 @@ td.award,td.wide{text-align:left;font-size:15.5px;color:var(--ink-dim)}
 .cost b{font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums}
 .ladder li.s3 .cost b,.ladder li.s4 .cost b{color:#f6c6ca}
 
+
+/* ============================================================
+   PRE-KVK
+   ============================================================ */
+.prekvk{padding:52px 0 20px}
+.pk-table th[scope="row"]{width:52px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.pk-table .t-legendary th[scope="row"],
+.pk-table .t-epic th[scope="row"],
+.pk-table .t-elite th[scope="row"],
+.pk-table .t-advanced th[scope="row"]{font-size:17px}
+.pk-table td.total{font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--gold-lit)}
+.pk-table tbody tr:nth-child(even){background:rgba(226,233,247,.016)}
+.pk-table tbody tr:hover{background:rgba(224,169,46,.05)}
+.pk-table td,.pk-table th[scope="row"]{padding:11px 14px;font-size:15px}
+.pk-table thead th{padding:11px 14px;font-size:12.5px}
+.pk-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pk-wrap .pk-table{min-width:820px}
+@media(max-width:720px){.pk-wrap .pk-table{min-width:0}}
+
+/* aşama dağılımı çubuğu */
+.mix{display:flex;height:5px;width:120px;margin-left:auto;overflow:hidden;background:rgba(226,233,247,.08)}
+.mix i{display:block;height:100%}
+.mix .m1{background:var(--frost)}
+.mix .m2{background:var(--moss)}
+.mix .m3{background:var(--gold)}
+.mix-key{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:13.5px;color:var(--ink-faint)}
+.mix-key span{display:inline-flex;align-items:center;gap:7px}
+.mix-key b{display:inline-block;width:11px;height:5px}
 
 /* ============================================================
    RSS SELLERS
@@ -437,7 +467,8 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
   .hero{padding:40px 0 32px}
   .masthead-in{min-height:58px}
   .mark-sub{display:none}
-  .switch button{padding:7px 11px;font-size:13px}
+  .switch button{padding:7px 9px;font-size:12.5px}
+  .masthead-in{gap:10px}
 
   table.ledger thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   table.ledger tbody tr{display:block;padding:14px 14px 14px 0;border-bottom:1px solid var(--rule-soft)}
@@ -485,6 +516,7 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
     <div class="switch" role="tablist" aria-label="Sections">
       <button role="tab" id="tab-rewards" aria-controls="rewards" aria-selected="true" data-panel="rewards">Rewards</button>
       <button role="tab" id="tab-standings" aria-controls="standings" aria-selected="false" data-panel="standings">DKP</button>
+      <button role="tab" id="tab-prekvk" aria-controls="prekvk" aria-selected="false" data-panel="prekvk">Pre-KvK</button>
       <button role="tab" id="tab-sellers" aria-controls="sellers" aria-selected="false" data-panel="sellers">RSS sellers</button>
       <button role="tab" id="tab-penalties" class="risk" aria-controls="penalties" aria-selected="false" data-panel="penalties">Penalties</button>
     </div>
@@ -912,6 +944,80 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
 </div>
 
 <!-- ============================================================
+     PRE-KVK RANKINGS
+     ============================================================ -->
+<div class="panel" id="prekvk" role="tabpanel" aria-labelledby="tab-prekvk">
+<div class="wrap prekvk">
+
+  <div class="chapter-head">
+    <h3>Pre-KvK rankings</h3>
+    <p>Points scored across the three pre-KvK stages. This is what decides your starting position
+       before the season proper begins.</p>
+  </div>
+
+  <div class="dkp-meta">
+    <div><span>KvK</span><b id="pk-kvk">—</b></div>
+    <div><span>Pre-KvK period</span><b id="pk-period">—</b></div>
+    <div><span>Governors ranked</span><b id="pk-count">—</b></div>
+    <div><span>Kingdom total</span><b id="pk-total">—</b></div>
+  </div>
+
+  <div class="dkp-tools">
+    <input type="search" id="pk-search" placeholder="Search by name or governor ID" aria-label="Search governors">
+    <div class="chips" role="group" aria-label="Filters">
+      <button class="chip" data-pkfilter="all" aria-pressed="true">Everyone</button>
+      <button class="chip" data-pkfilter="top" aria-pressed="false">Top 20</button>
+      <button class="chip warn" data-pkfilter="gap" aria-pressed="false">Missed a stage<span class="n"></span></button>
+    </div>
+    <select id="pk-sort" aria-label="Sort by">
+      <option value="total|desc">Total — high to low</option>
+      <option value="total|asc">Total — low to high</option>
+      <option value="s1|desc">Stage I — high to low</option>
+      <option value="s2|desc">Stage II — high to low</option>
+      <option value="s3|desc">Stage III — high to low</option>
+      <option value="name|asc">Name — A to Z</option>
+    </select>
+    <span id="pk-count-line"></span>
+  </div>
+
+  <div class="ledger-box pk-wrap">
+    <table class="ledger pk-table">
+      <thead>
+        <tr>
+          <th scope="col" class="s" data-key="rank">#<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="name">Governor<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="s1">Stage I<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="s2">Stage II<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="s3">Stage III<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="total">Total<span class="ar"></span></th>
+          <th scope="col">Stage mix</th>
+        </tr>
+      </thead>
+      <tbody id="pk-rows"><tr><td class="empty" colspan="7">Loading the rankings…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="mix-key">
+    <span><b class="m1" style="background:var(--frost)"></b> Stage I</span>
+    <span><b class="m2" style="background:var(--moss)"></b> Stage II</span>
+    <span><b class="m3" style="background:var(--gold)"></b> Stage III</span>
+  </div>
+
+  <div class="dkp-links">
+    <button class="door gold" data-jump="rewards" data-to="during-kvk">Rewards during KVK</button>
+    <button class="door" data-jump="standings" data-to="standings">Season DKP standings</button>
+  </div>
+
+  <div class="closing">
+    <h2>Pre-KvK sets the starting line</h2>
+    <p>Stage III carries most of the weight, but the first two stages are where the easy points sit.
+       Missing a stage entirely is what pulls governors down this table.</p>
+  </div>
+
+</div>
+</div>
+
+<!-- ============================================================
      RSS SELLERS
      ============================================================ -->
 <div class="panel" id="sellers" role="tabpanel" aria-labelledby="tab-sellers">
@@ -1003,7 +1109,7 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
-  <span id="build">build 6 &middot; <span id="data-stamp">no scan loaded</span></span>
+  <span id="build">build 7 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
@@ -1298,6 +1404,128 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
   });
   box.addEventListener('click', () => box.classList.remove('on'));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') box.classList.remove('on'); });
+})();
+</script>
+
+<script>
+(function () {
+  const rowsEl  = document.getElementById('pk-rows');
+  const searchEl= document.getElementById('pk-search');
+  const sortEl  = document.getElementById('pk-sort');
+  const countEl = document.getElementById('pk-count-line');
+  const chips   = [...document.querySelectorAll('[data-pkfilter]')];
+  const heads   = [...document.querySelectorAll('.pk-table th.s')];
+
+  let data = null, sortKey = 'total', sortDir = 'desc', filter = 'all';
+
+  const fmt = n => {
+    if (n === undefined || n === null || isNaN(n)) return '\u2014';
+    if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+    if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+    if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+    return String(Math.round(n));
+  };
+  const cell = n => (!n ? '<span class="none">\u2014</span>' : fmt(n));
+  const esc = s => String(s == null ? '' : s)
+    .replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const tier = r => r === 1 ? 't-legendary' : r <= 3 ? 't-epic' : r <= 8 ? 't-elite' : r <= 18 ? 't-advanced' : 't-plain';
+  const gap = p => p.s1 === 0 || p.s2 === 0 || p.s3 === 0;
+
+  function mixBar(p) {
+    const t = p.total || 1;
+    const w = v => (v / t * 100).toFixed(1) + '%';
+    return '<span class="mix">' +
+      '<i class="m1" style="width:' + w(p.s1) + '"></i>' +
+      '<i class="m2" style="width:' + w(p.s2) + '"></i>' +
+      '<i class="m3" style="width:' + w(p.s3) + '"></i></span>';
+  }
+
+  function current() {
+    let list = data.players.slice();
+    if (filter === 'top') list = list.filter(p => p.rank <= 20);
+    else if (filter === 'gap') list = list.filter(gap);
+
+    const q = searchEl.value.trim().toLowerCase();
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || String(p.id || '').includes(q));
+
+    const dir = sortDir === 'asc' ? 1 : -1;
+    list.sort((a, b) => sortKey === 'name'
+      ? a.name.localeCompare(b.name) * dir
+      : ((a[sortKey] || 0) - (b[sortKey] || 0)) * dir);
+    return list;
+  }
+
+  function markHeads() {
+    heads.forEach(th => {
+      const on = th.dataset.key === sortKey;
+      if (on) th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+      else th.removeAttribute('aria-sort');
+      th.querySelector('.ar').textContent = on ? (sortDir === 'asc' ? '\u25b2' : '\u25bc') : '\u25be';
+    });
+    sortEl.value = sortKey + '|' + sortDir;
+  }
+
+  function render() {
+    const list = current();
+    if (!list.length) {
+      rowsEl.innerHTML = '<tr><td class="empty" colspan="7">No governor matches this search.</td></tr>';
+      countEl.textContent = '0 of ' + data.players.length;
+      return;
+    }
+    rowsEl.innerHTML = list.map(p =>
+      '<tr class="' + tier(p.rank) + '">' +
+        '<th scope="row">' + p.rank + '</th>' +
+        '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b>' +
+          '<span>' + (p.id ? '#' + esc(p.id) : '') + '</span></td>' +
+        '<td data-label="Stage I">' + cell(p.s1) + '</td>' +
+        '<td data-label="Stage II">' + cell(p.s2) + '</td>' +
+        '<td data-label="Stage III">' + cell(p.s3) + '</td>' +
+        '<td class="total" data-label="Total">' + fmt(p.total) + '</td>' +
+        '<td data-label="Stage mix">' + mixBar(p) + '</td>' +
+      '</tr>').join('');
+    countEl.textContent = list.length === data.players.length
+      ? list.length + ' governors'
+      : list.length + ' of ' + data.players.length;
+    markHeads();
+  }
+
+  heads.forEach(th => th.addEventListener('click', () => {
+    const k = th.dataset.key;
+    if (sortKey === k) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortKey = k; sortDir = (k === 'name' || k === 'rank') ? 'asc' : 'desc'; }
+    render();
+  }));
+  sortEl.addEventListener('change', () => {
+    const [k, d] = sortEl.value.split('|'); sortKey = k; sortDir = d; render();
+  });
+  chips.forEach(c => c.addEventListener('click', () => {
+    filter = c.dataset.pkfilter;
+    chips.forEach(o => o.setAttribute('aria-pressed', String(o === c)));
+    render();
+  }));
+  searchEl.addEventListener('input', render);
+
+  function apply(d) {
+    data = d;
+    const per = d.period || {};
+    document.getElementById('pk-kvk').textContent = d.kvk || '\u2014';
+    document.getElementById('pk-period').textContent =
+      per.start && per.end ? per.start + ' \u2013 ' + per.end : '\u2014';
+    document.getElementById('pk-count').textContent = d.players.length;
+    document.getElementById('pk-total').textContent =
+      fmt(d.players.reduce((a, p) => a + (p.total || 0), 0));
+    const n = document.querySelector('[data-pkfilter="gap"] .n');
+    if (n) n.textContent = d.players.filter(gap).length;
+    render();
+  }
+
+  if (window.PREKVK_DATA && window.PREKVK_DATA.players) apply(window.PREKVK_DATA);
+  else fetch('prekvk.json', { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw 0; return r.json(); })
+    .then(apply)
+    .catch(() => {
+      rowsEl.innerHTML = '<tr><td class="empty" colspan="7">Pre-KvK data not available right now.</td></tr>';
+    });
 })();
 </script>
 
