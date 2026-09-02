@@ -303,6 +303,30 @@ td.award,td.wide{text-align:left;font-size:15.5px;color:var(--ink-dim)}
 .duty.key{border-color:rgba(224,169,46,.42);color:var(--gold-lit)}
 .no-duty{margin-top:12px;color:var(--ink-faint);font-size:14.5px}
 
+
+/* takip tablosu */
+.track-table td{vertical-align:middle}
+.track-table td.area{text-align:left;font-size:15.5px;color:var(--ink)}
+.track-table td.area em{display:block;font-style:normal;margin-top:3px;font-size:13px;color:var(--ink-faint)}
+.track-table td.owner{text-align:left}
+.owner-chip{
+  display:inline-block;margin:2px 5px 2px 0;padding:4px 10px;
+  font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.02em;border-radius:2px;
+  border:1px solid rgba(139,108,196,.5);background:rgba(139,108,196,.12);color:#bda4ec;
+}
+.owner-chip.king{border-color:rgba(224,169,46,.55);background:rgba(224,169,46,.13);color:var(--gold-lit)}
+.owner-chip.all{border-color:rgba(226,233,247,.22);background:rgba(226,233,247,.05);color:var(--ink-dim)}
+.rule-link{
+  font-family:Oswald,sans-serif;font-size:12.5px;padding:6px 11px;border-radius:2px;
+  border:1px solid var(--rule);color:var(--ink-dim);background:transparent;cursor:pointer;white-space:nowrap;
+  transition:.16s ease;
+}
+.rule-link:hover{border-color:rgba(224,169,46,.55);color:var(--gold-lit)}
+.rule-link.pen:hover{border-color:rgba(192,32,47,.6);color:var(--crimson-lit)}
+.track-table{min-width:760px}
+.track-wrap{overflow-x:auto}
+@media(max-width:720px){.track-table{min-width:0}}
+
 /* ============================================================
    PRE-KVK
    ============================================================ */
@@ -1141,6 +1165,63 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
   </article>
   </div>
 
+
+  <div class="chapter-head" style="margin-top:44px">
+    <h3>Reward &amp; penalty tracking</h3>
+    <p>Each area has one owner. If you are missing a reward or think a fine is wrong, take it to the
+       person listed here rather than opening it in kingdom chat.</p>
+  </div>
+
+  <div class="ledger-box track-wrap">
+    <table class="ledger track-table">
+      <thead>
+        <tr><th scope="col">Area</th><th scope="col">Handled by</th><th scope="col">Rule</th></tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td class="area" data-label="Area">War week DKP<em>Calculation and reward distribution</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip king">ittihat</span></td>
+              <td data-label="Rule"><button class="rule-link" data-jump="rewards" data-to="war-weeks">Rewards</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">End of KVK DKP<em>Final calculation and season payout</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip king">ittihat</span></td>
+              <td data-label="Rule"><button class="rule-link" data-jump="rewards" data-to="end-kvk">Rewards</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Low DKP penalty<em>Who falls below the requirement, and what follows</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip king">ittihat</span></td>
+              <td data-label="Rule"><button class="rule-link pen" data-jump="penalties" data-to="p-dkp">Penalty</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Barbarian fort rallies<em>Weekly tracking, rewards and fines</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip ">22メ FTW TITANメ</span></td>
+              <td data-label="Rule"><button class="rule-link" data-jump="rewards" data-to="forts">Rewards</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Alliance Mobilization<em>Rewards and fines for the 1,500 point minimum</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip ">22メ Era メ</span></td>
+              <td data-label="Rule"><button class="rule-link" data-jump="rewards" data-to="mobilization">Rewards</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Baulur Ironhand and Barbarian Keep<em>Unauthorised kill tracking</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip ">22メ Era メ</span><span class="owner-chip ">22メ Onur メ</span></td>
+              <td data-label="Rule"><button class="rule-link pen" data-jump="penalties" data-to="p-baulur">Penalty</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Ark of Osiris<em>No-show penalties for registered players</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip ">22 メ AbuSarah メ</span></td>
+              <td data-label="Rule"><button class="rule-link pen" data-jump="penalties" data-to="p-aoo">Penalty</button></td>
+            </tr>
+            <tr>
+              <td class="area" data-label="Area">Guardians<em>Early kill tracking during buff windows</em></td>
+              <td class="owner" data-label="Handled by"><span class="owner-chip all">All R4</span></td>
+              <td data-label="Rule"><button class="rule-link pen" data-jump="penalties" data-to="p-guardians">Penalty</button></td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+
   <div class="closing">
     <h2>Ask the right person</h2>
     <p>Tap a governor ID to copy it. Reward and penalty decisions come from the king; everything else
@@ -1316,7 +1397,7 @@ button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:va
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
-  <span id="build">build 9 &middot; <span id="data-stamp">no scan loaded</span></span>
+  <span id="build">build 10 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
