@@ -189,6 +189,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    LEDGER
    ============================================================ */
 .ledger-box{border:1px solid var(--rule);background:var(--plate);overflow:hidden}
+.dkp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dkp-wrap .dkp-table{min-width:940px}
+@media(max-width:720px){.dkp-wrap .dkp-table{min-width:0}}
 table.ledger{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 table.ledger thead th{
   font-family:Oswald,sans-serif;font-weight:400;font-size:13px;color:var(--ink-faint);
@@ -292,32 +295,48 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
 .chip[aria-pressed="true"].warn{background:rgba(192,32,47,.16);border-color:rgba(192,32,47,.55);color:var(--crimson-lit)}
 .chip .n{opacity:.62;margin-left:5px;font-variant-numeric:tabular-nums}
 
-#dkp-count-line{margin-left:auto;font-family:Oswald,sans-serif;font-size:13.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+#dkp-count-line{
+  margin-left:auto;padding-left:6px;white-space:nowrap;
+  font-family:Oswald,sans-serif;font-size:13.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums;
+}
 #dkp-sort{display:none}
 
 /* sıralanabilir başlıklar */
-.dkp-table thead th{position:sticky;top:64px;z-index:3}
 .dkp-table th.s{cursor:pointer;user-select:none;transition:color .16s ease}
 .dkp-table th.s:hover{color:var(--ink)}
 .dkp-table th.s .ar{margin-left:5px;font-size:10px;opacity:.3}
 .dkp-table th.s[aria-sort]{color:var(--gold-lit)}
 .dkp-table th.s[aria-sort] .ar{opacity:1}
 
-.dkp-table th[scope="row"]{font-size:16px;font-variant-numeric:tabular-nums}
+.dkp-table thead th{padding:11px 14px;font-size:12.5px}
+.dkp-table tbody tr:nth-child(even){background:rgba(226,233,247,.016)}
+.dkp-table tbody tr:hover{background:rgba(224,169,46,.05)}
+.dkp-table td,.dkp-table th[scope="row"]{padding:11px 14px;font-size:15px;vertical-align:middle}
+.dkp-table th[scope="row"]{
+  width:52px;font-size:15px;color:var(--ink-faint);font-variant-numeric:tabular-nums;
+}
+.dkp-table .t-legendary th[scope="row"],
+.dkp-table .t-epic th[scope="row"],
+.dkp-table .t-elite th[scope="row"],
+.dkp-table .t-advanced th[scope="row"]{font-size:17px}
 .dkp-table .who{text-align:left}
-.dkp-table .who b{display:block;font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--ink)}
-.dkp-table .who span{font-size:12.5px;color:var(--ink-faint)}
+.dkp-table .who{min-width:210px}
+.dkp-table .who b{
+  display:inline-block;font-family:Oswald,sans-serif;font-weight:500;font-size:15.5px;color:var(--ink);
+  max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;
+}
+.dkp-table .who span{display:block;font-size:12px;color:var(--ink-faint);letter-spacing:.02em}
 .dkp-table .who i{
   font-style:normal;margin-left:7px;padding:1px 6px;font-family:Oswald,sans-serif;font-size:11.5px;
   border:1px solid rgba(224,169,46,.4);color:var(--gold-lit);border-radius:2px;
 }
-.dkp-table td.dkp-cell{font-family:Oswald,sans-serif;font-weight:500;font-size:17px;color:var(--ink)}
+.dkp-table td.dkp-cell{font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--gold-lit)}
 tr.below td.dkp-cell{color:var(--crimson-lit)}
 tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 
-.goal{display:inline-block;min-width:92px;text-align:right}
-.goal em{font-style:normal;display:block;font-size:12.5px;color:var(--ink-faint)}
-.bar{display:block;height:3px;margin-top:5px;background:rgba(226,233,247,.1);overflow:hidden}
+.goal{display:inline-block;min-width:86px;text-align:right}
+.goal em{font-style:normal;display:block;font-size:11.5px;color:var(--ink-faint);line-height:1.3}
+.bar{display:block;height:2px;margin-top:4px;background:rgba(226,233,247,.09);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--moss)}
 .bar.short i{background:var(--ember)}
 .bar.under i{background:var(--crimson)}
@@ -783,7 +802,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
     <span id="dkp-count-line"></span>
   </div>
 
-  <div class="ledger-box">
+  <div class="ledger-box dkp-wrap">
     <table class="ledger dkp-table">
       <thead>
         <tr>
