@@ -87,11 +87,21 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .mark-name{font-family:Oswald,sans-serif;font-size:16px;font-weight:600;letter-spacing:.02em;line-height:1.15;display:block}
 .mark-sub{font-size:11.5px;color:var(--ink-faint);letter-spacing:.05em;line-height:1.15;display:block}
 
-.switch{display:flex;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:3px;background:rgba(0,0,0,.28)}
-.switch button{font-family:Oswald,sans-serif;font-size:14px;padding:7px 15px;border-radius:2px;color:var(--ink-dim);transition:background .18s ease,color .18s ease}
-.switch button:hover{color:var(--ink)}
-.switch button[aria-selected="true"]{background:var(--gold);color:#2a1c02;font-weight:500}
-.switch button.risk[aria-selected="true"]{background:var(--crimson);color:#fff}
+.switch{display:flex;gap:3px}
+.switch button{
+  position:relative;font-family:Oswald,sans-serif;font-size:14px;font-weight:400;
+  padding:9px 17px 11px;border-radius:2px;color:var(--ink-dim);
+  transition:background .16s ease,color .16s ease;
+}
+.switch button::after{
+  content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;
+  background:transparent;transition:background .16s ease;
+}
+.switch button:hover{color:var(--ink);background:rgba(226,233,247,.05)}
+.switch button[aria-selected="true"]{color:#fff;background:rgba(224,169,46,.1);font-weight:500}
+.switch button[aria-selected="true"]::after{background:var(--gold)}
+.switch button.risk[aria-selected="true"]{background:rgba(192,32,47,.15)}
+.switch button.risk[aria-selected="true"]::after{background:var(--crimson)}
 
 /* ============================================================
    HERO — the alliance standard
@@ -251,35 +261,70 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
    DKP STANDINGS
    ============================================================ */
 .standings{padding:52px 0 20px}
-.dkp-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:20px 0 18px;border:1px solid var(--rule);background:var(--rule)}
+
+.dkp-meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:22px 0 20px;border:1px solid var(--rule);background:var(--rule)}
 .dkp-meta div{padding:14px 18px;background:var(--ground-deep)}
 .dkp-meta span{display:block;font-family:Oswald,sans-serif;font-size:12.5px;letter-spacing:.05em;color:var(--ink-faint)}
-.dkp-meta b{display:block;margin-top:2px;font-family:Oswald,sans-serif;font-weight:500;font-size:17px;color:var(--gold-lit)}
+.dkp-meta b{display:block;margin-top:2px;font-family:Oswald,sans-serif;font-weight:500;font-size:17px;color:var(--gold-lit);font-variant-numeric:tabular-nums}
 
-.dkp-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:14px}
+.dkp-tools{
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+  padding:14px 16px;margin-bottom:-1px;
+  border:1px solid var(--rule);background:var(--ground-deep);
+}
 #dkp-search{
-  flex:1 1 300px;padding:11px 14px;font-family:Spectral,serif;font-size:15.5px;
-  background:var(--ground-deep);color:var(--ink);border:1px solid var(--rule);border-radius:2px;
+  flex:1 1 260px;min-width:0;padding:10px 13px;
+  font-family:Spectral,serif;font-size:15px;
+  background:var(--plate);color:var(--ink);
+  border:1px solid var(--rule);border-radius:2px;
 }
 #dkp-search::placeholder{color:var(--ink-faint)}
-#dkp-count-line{font-family:Oswald,sans-serif;font-size:14px;color:var(--ink-faint)}
+#dkp-search:focus{border-color:rgba(224,169,46,.6)}
 
-.dkp-table th[scope="row"]{font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-family:Oswald,sans-serif;font-size:13px;padding:8px 13px;
+  border:1px solid var(--rule);border-radius:2px;color:var(--ink-dim);
+  background:transparent;transition:.16s ease;
+}
+.chip:hover{color:var(--ink);border-color:rgba(226,233,247,.28)}
+.chip[aria-pressed="true"]{background:rgba(224,169,46,.14);border-color:rgba(224,169,46,.55);color:var(--gold-lit)}
+.chip[aria-pressed="true"].warn{background:rgba(192,32,47,.16);border-color:rgba(192,32,47,.55);color:var(--crimson-lit)}
+.chip .n{opacity:.62;margin-left:5px;font-variant-numeric:tabular-nums}
+
+#dkp-count-line{margin-left:auto;font-family:Oswald,sans-serif;font-size:13.5px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+#dkp-sort{display:none}
+
+/* sıralanabilir başlıklar */
+.dkp-table thead th{position:sticky;top:64px;z-index:3}
+.dkp-table th.s{cursor:pointer;user-select:none;transition:color .16s ease}
+.dkp-table th.s:hover{color:var(--ink)}
+.dkp-table th.s .ar{margin-left:5px;font-size:10px;opacity:.3}
+.dkp-table th.s[aria-sort]{color:var(--gold-lit)}
+.dkp-table th.s[aria-sort] .ar{opacity:1}
+
+.dkp-table th[scope="row"]{font-size:16px;font-variant-numeric:tabular-nums}
 .dkp-table .who{text-align:left}
 .dkp-table .who b{display:block;font-family:Oswald,sans-serif;font-weight:500;font-size:16px;color:var(--ink)}
-.dkp-table .who span{font-size:13px;color:var(--ink-faint)}
+.dkp-table .who span{font-size:12.5px;color:var(--ink-faint)}
 .dkp-table .who i{
   font-style:normal;margin-left:7px;padding:1px 6px;font-family:Oswald,sans-serif;font-size:11.5px;
   border:1px solid rgba(224,169,46,.4);color:var(--gold-lit);border-radius:2px;
 }
-.goal{display:inline-block;min-width:96px;text-align:right}
-.goal em{font-style:normal;display:block;font-size:13px;color:var(--ink-faint)}
-.bar{display:block;height:4px;margin-top:4px;background:rgba(226,233,247,.1);border-radius:2px;overflow:hidden}
+.dkp-table td.dkp-cell{font-family:Oswald,sans-serif;font-weight:500;font-size:17px;color:var(--ink)}
+tr.below td.dkp-cell{color:var(--crimson-lit)}
+tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
+
+.goal{display:inline-block;min-width:92px;text-align:right}
+.goal em{font-style:normal;display:block;font-size:12.5px;color:var(--ink-faint)}
+.bar{display:block;height:3px;margin-top:5px;background:rgba(226,233,247,.1);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--moss)}
 .bar.short i{background:var(--ember)}
 .bar.under i{background:var(--crimson)}
-.empty{padding:26px 16px;text-align:center;color:var(--ink-faint)}
-.sample-flag{border-color:rgba(224,169,46,.3);background:rgba(224,169,46,.07)}
+
+.empty{padding:30px 16px;text-align:center;color:var(--ink-faint)}
+
+.dkp-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 
 /* ============================================================
    RESPONSIVE
@@ -295,7 +340,7 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
   .banner{padding:26px 18px 40px}
   .hero-body{padding:0 26px 30px}
   .standing{grid-template-columns:1fr}
-  .dkp-meta{grid-template-columns:1fr}
+  .dkp-meta{grid-template-columns:repeat(2,1fr)}
 }
 
 @media (max-width:720px){
@@ -310,6 +355,14 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
   table.ledger td{display:flex;justify-content:space-between;gap:16px;padding:5px 0 5px 16px;text-align:right;font-size:15px}
   table.ledger td::before{content:attr(data-label);color:var(--ink-faint);font-size:14px;font-family:Oswald,sans-serif;letter-spacing:.03em}
   td.award,td.wide{padding-left:16px;text-align:right}
+  .dkp-meta{grid-template-columns:1fr}
+  .dkp-tools{flex-direction:column;align-items:stretch}
+  #dkp-count-line{margin-left:0}
+  #dkp-sort{
+    display:block;width:100%;padding:10px 12px;font-family:Spectral,serif;font-size:15px;
+    background:var(--plate);color:var(--ink);border:1px solid var(--rule);border-radius:2px;
+  }
+  .dkp-table td.dkp-cell{font-size:15px}
   .ladder li{grid-template-columns:1fr;gap:10px;padding-right:0}
   .ladder .stage{padding-left:18px}
   .ladder h4,.ladder p,.cost{margin-left:18px}
@@ -696,19 +749,37 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
 
   <div class="chapter-head">
     <h3>DKP standings</h3>
-    <p>Live ranking from the kingdom scan. Rewards on the war-week and end-of-KVK tables are paid on these positions.</p>
+    <p>Live ranking from the kingdom scan. Sort any column, or search for your own row.</p>
   </div>
 
   <div class="dkp-meta">
     <div><span>Scan period</span><b id="m-period">—</b></div>
     <div><span>DKP formula</span><b id="m-formula">—</b></div>
     <div><span>Governors scanned</span><b id="m-players">—</b></div>
+    <div><span>Minimum DKP</span><b id="m-min">—</b></div>
   </div>
 
-  <div class="note sample-flag" id="dkp-notice" hidden><b>Sample data.</b>&nbsp;Upload dkp.json next to this page to show the real scan.</div>
-
   <div class="dkp-tools">
-    <input type="search" id="dkp-search" placeholder="Find a governor by name or ID" aria-label="Find a governor">
+    <input type="search" id="dkp-search" placeholder="Search by name or governor ID" aria-label="Search governors">
+    <div class="chips" role="group" aria-label="Filters">
+      <button class="chip" data-filter="all" aria-pressed="true">Everyone</button>
+      <button class="chip warn" data-filter="below" aria-pressed="false">Below minimum<span class="n"></span></button>
+      <button class="chip" data-filter="reached" aria-pressed="false">Goal reached<span class="n"></span></button>
+      <button class="chip" data-filter="missed" aria-pressed="false">Goal missed<span class="n"></span></button>
+    </div>
+    <select id="dkp-sort" aria-label="Sort by">
+      <option value="dkp|desc">DKP — high to low</option>
+      <option value="dkp|asc">DKP — low to high</option>
+      <option value="pct|desc">Goal % — high to low</option>
+      <option value="pct|asc">Goal % — low to high</option>
+      <option value="power|desc">Power — high to low</option>
+      <option value="acclaim|desc">Acclaim — high to low</option>
+      <option value="t4|desc">T4 kills — high to low</option>
+      <option value="t5|desc">T5 kills — high to low</option>
+      <option value="deads|desc">Deads — high to low</option>
+      <option value="honor|desc">Honor — high to low</option>
+      <option value="name|asc">Name — A to Z</option>
+    </select>
     <span id="dkp-count-line"></span>
   </div>
 
@@ -716,13 +787,25 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
     <table class="ledger dkp-table">
       <thead>
         <tr>
-          <th scope="col">#</th><th scope="col">Governor</th>
-          <th scope="col">Power</th><th scope="col">DKP</th><th scope="col">Goal</th>
-          <th scope="col">T4 kills</th><th scope="col">T5 kills</th><th scope="col">Deads</th><th scope="col">Honor</th>
+          <th scope="col" class="s" data-key="rank">#<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="name">Governor<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="power">Power<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="dkp">DKP<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="pct">Goal<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="acclaim">Acclaim<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="t4">T4 kills<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="t5">T5 kills<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="deads">Deads<span class="ar"></span></th>
+          <th scope="col" class="s" data-key="honor">Honor<span class="ar"></span></th>
         </tr>
       </thead>
-      <tbody id="dkp-rows"><tr><td class="empty" colspan="9">Loading the scan…</td></tr></tbody>
+      <tbody id="dkp-rows"><tr><td class="empty" colspan="10">Loading the scan…</td></tr></tbody>
     </table>
+  </div>
+
+  <div class="dkp-links">
+    <button class="door gold" data-jump="rewards" data-to="war-weeks">What these ranks earn</button>
+    <button class="door red" data-jump="penalties" data-to="p-dkp">Penalty for low DKP</button>
   </div>
 
   <div class="closing">
@@ -799,64 +882,78 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
 <script src="dkp-data.js" onerror="void 0"></script>
 <script>
 (function () {
-  const SAMPLE = {
-    updated: "", period: { start: "5 Aug 02:08 UTC", end: "2 Sep 04:17 UTC" },
-    formula: "DEAD\u00d75 + T4-KILLS\u00d75 + T5-KILLS\u00d710",
-    sample: true,
-    players: [
-      { rank:1, name:"22 FTW TITAN", id:"203455451", alliance:"K22V", power:60800000, dkp:227100000, goal:108900000, t4:3600000, t5:20600000, deads:643200, honor:100500 },
-      { rank:2, name:"22 xChrissyx", id:"203328812", alliance:"K22V", power:87700000, dkp:222900000, goal:163500000, t4:1500000, t5:21600000, deads:747, honor:49600 },
-      { rank:3, name:"22 Tenter",   id:"201975246", alliance:"K22V", power:123400000, dkp:141400000, goal:237200000, t4:3200000, t5:12500000, deads:10200, honor:81900 },
-      { rank:4, name:"22 Yaseen",   id:"208108774", alliance:"K22V", power:93000000, dkp:140400000, goal:182300000, t4:4200000, t5:11800000, deads:201000, honor:42300 }
-    ]
-  };
-
-  const rowsEl = document.getElementById('dkp-rows');
+  const rowsEl   = document.getElementById('dkp-rows');
   const searchEl = document.getElementById('dkp-search');
-  const countEl = document.getElementById('dkp-count-line');
-  let data = null;
+  const sortEl   = document.getElementById('dkp-sort');
+  const countEl  = document.getElementById('dkp-count-line');
+  const chips    = [...document.querySelectorAll('.chip')];
+  const heads    = [...document.querySelectorAll('.dkp-table th.s')];
 
-  function fmt(n) {
+  const DEFAULT_MIN = 40000000;
+  let data = null, minDkp = DEFAULT_MIN;
+  let sortKey = 'dkp', sortDir = 'desc', filter = 'all';
+
+  const fmt = n => {
     if (n === undefined || n === null || isNaN(n)) return '<span class="none">\u2014</span>';
     if (Math.abs(n) >= 1e9) return (n / 1e9).toFixed(2) + 'B';
     if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1) + 'M';
     if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(1) + 'K';
     return String(Math.round(n));
-  }
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
-      ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-  }
-  function tier(rank) {
-    if (rank === 1) return 't-legendary';
-    if (rank <= 3) return 't-epic';
-    if (rank <= 8) return 't-elite';
-    if (rank <= 18) return 't-advanced';
-    return 't-plain';
-  }
+  };
+  const esc = s => String(s == null ? '' : s)
+    .replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const tier = r => r === 1 ? 't-legendary' : r <= 3 ? 't-epic' : r <= 8 ? 't-elite' : r <= 18 ? 't-advanced' : 't-plain';
+  const pctOf = p => (p.goal ? (p.dkp / p.goal) * 100 : null);
+
   function goalCell(p) {
-    if (!p.goal) return '<span class="none">\u2014</span>';
-    const pct = Math.round((p.dkp / p.goal) * 100);
-    const cls = pct >= 100 ? '' : pct >= 60 ? ' short' : ' under';
-    return '<span class="goal">' + pct + '%<em>of ' + fmt(p.goal) + '</em>' +
-           '<span class="bar' + cls + '"><i style="width:' + Math.min(100, pct) + '%"></i></span></span>';
+    const pct = pctOf(p);
+    if (pct === null) return '<span class="none">\u2014</span>';
+    const r = Math.round(pct);
+    const cls = r >= 100 ? '' : r >= 60 ? ' short' : ' under';
+    return '<span class="goal">' + r + '%<em>of ' + fmt(p.goal) + '</em>' +
+           '<span class="bar' + cls + '"><i style="width:' + Math.min(100, r) + '%"></i></span></span>';
   }
 
-  function render(list) {
+  function current() {
+    let list = data.players.slice();
+
+    if (filter === 'below')        list = list.filter(p => p.dkp < minDkp);
+    else if (filter === 'reached') list = list.filter(p => pctOf(p) !== null && pctOf(p) >= 100);
+    else if (filter === 'missed')  list = list.filter(p => pctOf(p) !== null && pctOf(p) < 100);
+
+    const q = searchEl.value.trim().toLowerCase();
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || String(p.id || '').includes(q));
+
+    const dir = sortDir === 'asc' ? 1 : -1;
+    list.sort((a, b) => {
+      let x, y;
+      if (sortKey === 'name') return a.name.localeCompare(b.name) * dir;
+      if (sortKey === 'pct') { x = pctOf(a); y = pctOf(b); }
+      else { x = a[sortKey]; y = b[sortKey]; }
+      if (x === undefined || x === null) return 1;
+      if (y === undefined || y === null) return -1;
+      return (x - y) * dir;
+    });
+    return list;
+  }
+
+  function render() {
+    const list = current();
     if (!list.length) {
-      rowsEl.innerHTML = '<tr><td class="empty" colspan="9">No governor matches that name or ID.</td></tr>';
-      countEl.textContent = '';
+      rowsEl.innerHTML = '<tr><td class="empty" colspan="10">No governor matches this search.</td></tr>';
+      countEl.textContent = '0 of ' + data.players.length;
       return;
     }
     rowsEl.innerHTML = list.map(p =>
-      '<tr class="' + tier(p.rank) + '">' +
+      '<tr class="' + tier(p.rank) + (p.dkp < minDkp ? ' below' : '') + '">' +
         '<th scope="row">' + p.rank + '</th>' +
         '<td class="who" data-label="Governor"><b>' + esc(p.name) + '</b><span>' +
           (p.id ? '#' + esc(p.id) : '') + '</span>' +
           (p.alliance ? '<i>' + esc(p.alliance) + '</i>' : '') + '</td>' +
         '<td data-label="Power">' + fmt(p.power) + '</td>' +
-        '<td data-label="DKP">' + fmt(p.dkp) + '</td>' +
+        '<td class="dkp-cell" data-label="DKP">' + fmt(p.dkp) + '</td>' +
         '<td data-label="Goal">' + goalCell(p) + '</td>' +
+        '<td data-label="Acclaim">' + fmt(p.acclaim) + '</td>' +
         '<td data-label="T4 kills">' + fmt(p.t4) + '</td>' +
         '<td data-label="T5 kills">' + fmt(p.t5) + '</td>' +
         '<td data-label="Deads">' + fmt(p.deads) + '</td>' +
@@ -865,34 +962,78 @@ footer{margin-top:56px;padding:22px 0 40px;border-top:1px solid var(--rule-soft)
     countEl.textContent = list.length === data.players.length
       ? list.length + ' governors'
       : list.length + ' of ' + data.players.length;
+    markHeads();
   }
+
+  function markHeads() {
+    heads.forEach(th => {
+      const on = th.dataset.key === sortKey;
+      if (on) th.setAttribute('aria-sort', sortDir === 'asc' ? 'ascending' : 'descending');
+      else th.removeAttribute('aria-sort');
+      th.querySelector('.ar').textContent = on ? (sortDir === 'asc' ? '\u25b2' : '\u25bc') : '\u25be';
+    });
+    sortEl.value = sortKey + '|' + sortDir;
+  }
+
+  heads.forEach(th => th.addEventListener('click', () => {
+    const k = th.dataset.key;
+    if (sortKey === k) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortKey = k; sortDir = (k === 'name' || k === 'rank') ? 'asc' : 'desc'; }
+    render();
+  }));
+
+  sortEl.addEventListener('change', () => {
+    const [k, d] = sortEl.value.split('|');
+    sortKey = k; sortDir = d; render();
+  });
+
+  chips.forEach(c => c.addEventListener('click', () => {
+    filter = c.dataset.filter;
+    chips.forEach(o => o.setAttribute('aria-pressed', String(o === c)));
+    render();
+  }));
+
+  searchEl.addEventListener('input', render);
+
+  document.querySelectorAll('[data-jump]').forEach(btn => btn.addEventListener('click', () => {
+    document.getElementById('tab-' + btn.dataset.jump).click();
+    setTimeout(() => {
+      const t = document.getElementById(btn.dataset.to);
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 140);
+  }));
 
   function apply(d) {
     data = d;
+    minDkp = d.minDkp || DEFAULT_MIN;
     const per = d.period || {};
     document.getElementById('m-period').textContent =
-      per.start && per.end ? per.start + ' \u2192 ' + per.end : (d.updated || '\u2014');
+      per.start && per.end ? per.start + ' \u2013 ' + per.end : (d.updated || '\u2014');
     document.getElementById('m-formula').textContent = d.formula || '\u2014';
     document.getElementById('m-players').textContent = d.players.length;
-    if (d.sample) document.getElementById('dkp-notice').hidden = false;
-    render(d.players);
-  }
+    document.getElementById('m-min').textContent = fmt(minDkp).replace(/<[^>]+>/g, '');
 
-  function filter() {
-    const q = searchEl.value.trim().toLowerCase();
-    if (!q) return render(data.players);
-    render(data.players.filter(p =>
-      p.name.toLowerCase().includes(q) || String(p.id || '').includes(q)));
+    const below = d.players.filter(p => p.dkp < minDkp).length;
+    const reached = d.players.filter(p => pctOf(p) !== null && pctOf(p) >= 100).length;
+    chips.forEach(c => {
+      const n = c.querySelector('.n');
+      if (!n) return;
+      const f = c.dataset.filter;
+      n.textContent = f === 'below' ? below : f === 'reached' ? reached
+        : f === 'missed' ? d.players.filter(p => pctOf(p) !== null && pctOf(p) < 100).length : '';
+    });
+    render();
   }
-  searchEl.addEventListener('input', filter);
 
   if (window.DKP_DATA && window.DKP_DATA.players) {
     apply(window.DKP_DATA);
   } else {
     fetch('dkp.json', { cache: 'no-store' })
       .then(r => { if (!r.ok) throw 0; return r.json(); })
-      .then(d => apply(d))
-      .catch(() => apply(SAMPLE));
+      .then(apply)
+      .catch(() => {
+        rowsEl.innerHTML = '<tr><td class="empty" colspan="10">Scan data not available right now.</td></tr>';
+      });
   }
 })();
 </script>
