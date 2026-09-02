@@ -350,6 +350,9 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 }
 .pill.met{background:rgba(91,156,134,.16);border:1px solid rgba(91,156,134,.5);color:#8fd6bd}
 .pill.short{background:rgba(192,32,47,.15);border:1px solid rgba(192,32,47,.5);color:#f0a3aa}
+button.pill{font-family:Oswald,sans-serif;cursor:pointer;transition:.16s ease}
+button.pill.short:hover{background:rgba(192,32,47,.3);color:#fff;border-color:var(--crimson)}
+.verdict .door{margin-top:14px}
 
 /* tek oyuncu sonucu */
 .verdict{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;
@@ -865,7 +868,7 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 <footer class="wrap">
   <span>Kingdom 3922 — rewards and penalties</span>
   <span>Questions go to your R4 or kingdom leadership.</span>
-  <span id="build">build 4 &middot; <span id="data-stamp">no scan loaded</span></span>
+  <span id="build">build 5 &middot; <span id="data-stamp">no scan loaded</span></span>
 </footer>
 
 <script>
@@ -1006,6 +1009,8 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
           ? 'Scored ' + fmt(diff) + ' above the ' + fmt(r) + ' required for ' + fmt(powerOf(p)) + ' power.'
           : 'Short by ' + fmt(diff) + '. The requirement is ' + fmt(r) + ' for ' + fmt(powerOf(p)) + ' power.') +
         '</p>' +
+        (ok ? '' : '<button class="door red" data-jump="penalties" data-to="p-dkp">' +
+                   'What happens if you stay short</button>') +
       '</div>' +
       '<div class="verdict-nums">' +
         '<div><span>Scored</span><b>' + fmt(p.dkp) + '</b></div>' +
@@ -1034,7 +1039,9 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
         '<td class="dkp-cell" data-label="DKP">' + cell(p.dkp) + '</td>' +
         reqCells(p) +
         '<td data-label="Status">' + (ok === null ? '<span class="none">\u2014</span>'
-          : ok ? '<span class="pill met">Met</span>' : '<span class="pill short">Short</span>') + '</td>' +
+          : ok ? '<span class="pill met">Met</span>'
+               : '<button class="pill short" data-jump="penalties" data-to="p-dkp" ' +
+                 'title="See the low DKP penalty">Short</button>') + '</td>' +
         '<td data-label="Acclaim">' + cell(p.acclaim) + '</td>' +
         '<td data-label="T4 kills">' + cell(p.t4) + '</td>' +
         '<td data-label="T5 kills">' + cell(p.t5) + '</td>' +
@@ -1078,13 +1085,17 @@ tr.below th[scope="row"]{border-left-color:rgba(192,32,47,.55)}
 
   searchEl.addEventListener('input', render);
 
-  document.querySelectorAll('[data-jump]').forEach(btn => btn.addEventListener('click', () => {
-    document.getElementById('tab-' + btn.dataset.jump).click();
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-jump]');
+    if (!btn) return;
+    const tab = document.getElementById('tab-' + btn.dataset.jump);
+    if (!tab) return;
+    tab.click();
     setTimeout(() => {
       const t = document.getElementById(btn.dataset.to);
       if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 140);
-  }));
+  });
 
   function apply(d) {
     data = d;
